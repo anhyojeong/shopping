@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase"; // Firebase 모듈에서 auth 가져오기
+import { auth } from "../firebase"; // Firebase 모듈에서 auth 가져오기
 
 const SignUp = () => {
   const [name, setName] = useState("");
