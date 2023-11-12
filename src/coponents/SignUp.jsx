@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase"; // Firebase 모듈에서 auth 가져오기
 
 const SignUp = () => {
@@ -25,6 +25,19 @@ const SignUp = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        if (!user) {
+          setMsg("정보를 다시 입력해주세요ㅜㅜ");
+        }
+        // 회원가입 성공하면 입력한 이름 저장
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {
+            console.log("aa");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         setMsg("회원가입 성공!");
       })
       .catch((error) => {
@@ -32,7 +45,6 @@ const SignUp = () => {
         const errorMessage = error.message;
         console.log(errorCode);
         console.log(errorMessage);
-        setMsg("정보를 다시 입력해주세요ㅜㅜ");
       });
   };
 
