@@ -7,22 +7,23 @@ export const logout = () => ({
   type: 'LOGOUT'
 });
 
-// src/redux/reducers/authReducer.js
+
+// 리듀서
 const initialState = {
-  user: null
+  user: null,
 };
+
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN':
-      return {
-        ...state,
-        user: action.payload
-      };
+       // 로그인한 사람 정보를 세션 스토리지에 저장
+       sessionStorage.setItem('user', JSON.stringify(action.payload));
+       return { ...state, user: action.payload };
     case 'LOGOUT':
-      return {
-        ...state,
-        user: null
-      };
+      // 로그인한 사람 정보를 세션 스토리지에서 제거
+      sessionStorage.removeItem('user');
+      return { ...state, user: null };
+
     default:
       return state;
   }

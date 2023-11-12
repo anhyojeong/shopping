@@ -1,0 +1,5 @@
+.container #nav-Container{
+    display: flex;
+    flex-direction: row;
+}
+
