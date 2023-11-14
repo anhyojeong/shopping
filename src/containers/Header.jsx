@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Nav from "../components/Navigation ";
 import Search from "../components/Search";
+
 const Header = () => {
   return (
     <header className="header-container">
