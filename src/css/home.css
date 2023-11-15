@@ -1,0 +1,9 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-container{
+    border: 1px solid black;
+    flex : 6;
+}

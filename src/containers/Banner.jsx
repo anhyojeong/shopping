@@ -2,8 +2,8 @@ import React from "react";
 
 const Banner = () => {
   return (
-    <div>
-        배너!
+    <div className="banner-container">
+        <p>배너</p>
     </div>
   );
 };
