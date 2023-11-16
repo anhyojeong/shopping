@@ -1,7 +1,8 @@
 import React from "react";
 
-const Products = ()=>{
+const Products = ({selectedCategory})=>{
 
+    console.log(selectedCategory);
     return(
         <div>
             물건들

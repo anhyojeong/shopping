@@ -1,16 +1,21 @@
+/* home */
 .home-container {
   display: flex;
   flex-direction: column;
 }
 
-.banner-container {
+/* banner */
+.banner-image-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  
 }
 
-.banner-container img {
+.banner-image {
   width: 100%;
-  height: 30%;
-  max-width: 100%; 
+  transition: transform 0.5s ease-in-out;
+  height: auto;
+}
+
+.banner-image.active {
+  opacity: 1;
 }

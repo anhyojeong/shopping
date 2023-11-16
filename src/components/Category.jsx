@@ -1,12 +1,17 @@
 import React from "react";
 
-const Category = ()=>{
-
-    return(
-       <div>
-        카테고리
-       </div>
-    );
-}
+const Category = ({ categories, onSelect }) => {
+  return (
+    <div>
+      <ul>
+        {categories.map((category) => (
+          <li key={category} onClick={() => onSelect(category)}>
+            {category}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Category;
