@@ -3,7 +3,14 @@
   flex-direction: column;
 }
 
-.banner-container{
-    border: 1px solid black;
-    flex : 6;
+.banner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-container img {
+  width: 100%;
+  height: 30%;
+  max-width: 100%; 
 }
