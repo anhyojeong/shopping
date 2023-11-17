@@ -5,13 +5,13 @@ import Products from "../components/Products";
 import "../css/context.css"
 
 const Context = () => {
-  const categories = ['outer','acc']
+  const categories = ['아우터','상의','하의','가방']
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   
+  // 카테고리 골랐을 때 state 변경
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
   };
-
 
   return (
     <div className="context-container">

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged  } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
+import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 // 필요한 Firebase 서비스 가져오기
 const auth = getAuth(firebaseApp);
-const database = getDatabase(firebaseApp);
+const firestore  = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 // 이거 없으니까 undefiend 읽을 수 없다고 뜸 (getProvider)
@@ -32,4 +32,4 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-export { auth, database, storage };
+export { auth, firestore , storage };
