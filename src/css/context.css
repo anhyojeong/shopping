@@ -1,3 +1,43 @@
+ul{
+    list-style: none;
+    padding: 0 0;
+}
+
 .context-container{
     display: flex;
+    padding: 8px 8%;
+}
+
+/* 카테고리 */
+.category{
+    width: 150px;
+    height: 60px; 
+    border-radius: 5px;
+    margin: 10px 10px;
+    background-color: rgba(195, 193, 191, 0.5);
+    text-align: center;
+    /* 글자 중앙 정렬 하기 위해서 */
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 물건 */
+.products-container{
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+}
+#category-name{
+    padding: 12px 12px;
+}
+.products{
+    display: flex;
+}
+.product{
+    display: flex;
+    flex-direction: column;
+    padding: 8px 8px;
+    margin: 10px 10px;
+    background-color: antiquewhite;
 }

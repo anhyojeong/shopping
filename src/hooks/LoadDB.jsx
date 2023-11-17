@@ -2,9 +2,7 @@ import { firestore } from '../firebase';
 import { getDocs, collection } from 'firebase/firestore';
 
 const LoadDB = async ({selectedCategory}) => {
-    try {
-        console.log("파이어베이스" + selectedCategory);
-    
+    try {    
         const querySnapshot = await getDocs(collection(firestore, selectedCategory));
     
         const products = querySnapshot.docs.map((doc) => doc.data());
@@ -16,4 +14,4 @@ const LoadDB = async ({selectedCategory}) => {
       }
 };
 
-export {LoadDB};
+export default LoadDB;

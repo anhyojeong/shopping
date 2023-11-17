@@ -2,10 +2,10 @@ import React from "react";
 
 const Category = ({ categories, onSelect }) => {
   return (
-    <div>
+    <div className="categories-container">
       <ul>
         {categories.map((category) => (
-          <li key={category} onClick={() => onSelect(category)}>
+          <li className="category"key={category} onClick={() => onSelect(category)}>
             {category}
           </li>
         ))}

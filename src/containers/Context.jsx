@@ -5,7 +5,7 @@ import Products from "../components/Products";
 import "../css/context.css"
 
 const Context = () => {
-  const categories = ['아우터','상의','하의','가방']
+  const categories = ['outer','top','bottom']
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   
   // 카테고리 골랐을 때 state 변경
