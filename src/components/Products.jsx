@@ -21,7 +21,7 @@ const Products = ({ selectedCategory }) => {
  
   return (
     <div className="products-container">
-      <h2 id="category-name">{selectedCategory}</h2>
+      <p id="category-name">{selectedCategory}</p>
       <div className="products">
         {products.map((product, index) => (
           <div className="product" key={index}>

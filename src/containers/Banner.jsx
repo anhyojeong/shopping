@@ -5,7 +5,7 @@ import BannerSlide from "../components/BannerSilde";
 
 const Banner = () => {
   const [imageUrls, setImageUrls] = useState([]);
-  const folderPath = 'banner';
+  const folderPath = "banner";
   const { imageUrls: loadedImageUrls } = LoadStorageImages(folderPath);
 
   useEffect(() => {
@@ -14,10 +14,10 @@ const Banner = () => {
 
   return (
     <div className="banner-container">
-      {imageUrls.length ? (
-        <BannerSlide imageUrls={imageUrls} />
+       {imageUrls.length ? (
+        <BannerSlide images={imageUrls} />
       ) : (
-        <p>배너</p>
+        <></>
       )}
     </div>
   );

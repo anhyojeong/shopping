@@ -1,28 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import '../css/home.css';
+import React, { useState, useEffect } from "react";
+import "../css/home.css";
 
-const BannerSlide = ({ imageUrls }) => {
-  const [currentBanner, setCurrentBanner] = useState(0);
+const BannerSlide = ({ images }) => {
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentBanner((prevIndex) => (prevIndex + 1) % imageUrls.length);
+      setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
     }, 3000);
 
     return () => clearInterval(intervalId);
-  }, [imageUrls, currentBanner]);
+  }, [images, currentImage]);
 
   return (
     <div className="slide-container">
-      {imageUrls.length ? (
+      {images.length ? (
         <div className="slide">
-          <img src={imageUrls[currentBanner]} alt={`배너 이미지 ${currentBanner + 1}`} />
+          <img
+            className="slide-img"
+            src={images[currentImage]}
+            alt={`banner image ${currentImage + 1}`}
+          />
         </div>
       ) : (
-        <p>배너</p>
+        <p>No images available</p>
       )}
     </div>
   );
 };
 
 export default BannerSlide;
+

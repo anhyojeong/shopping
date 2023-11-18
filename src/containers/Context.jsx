@@ -15,7 +15,7 @@ const Context = () => {
 
   return (
     <div className="context-container">
-        <Category categories={categories} onSelect={handleCategorySelect} />
+        <Category categories={categories} selectedCategory={selectedCategory}  onSelect={handleCategorySelect} />
         <Products selectedCategory={selectedCategory}/>
     </div>
   );
