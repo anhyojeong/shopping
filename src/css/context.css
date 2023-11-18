@@ -1,43 +1,49 @@
-ul{
-    list-style: none;
-    padding: 0 0;
+ul {
+  list-style: none;
+  padding: 0 0;
 }
 
-.context-container{
-    display: flex;
-    padding: 8px 8%;
+.context-container {
+  display: flex;
+  padding: 8px 8px;
 }
 
 /* 카테고리 */
-.category{
-    width: 150px;
-    height: 60px; 
-    border-radius: 5px;
-    margin: 10px 10px;
-    background-color: rgba(195, 193, 191, 0.5);
-    text-align: center;
-    /* 글자 중앙 정렬 하기 위해서 */
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
+.category {
+  width: 200px;
+  height: 60px;
+  border-radius: 5px;
+  margin: 10px 10px;
+  background-color: rgba(195, 193, 191, 0.5);
+  text-align: center;
+  /* 글자 중앙 정렬 하기 위해서 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: larger;
+  letter-spacing: 1px; /* 글자 간격 */
 }
 
 /* 물건 */
-.products-container{
-    padding: 8px 12px;
-    display: flex;
-    flex-direction: column;
+.products-container {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
 }
-#category-name{
-    padding: 12px 12px;
+#category-name {
+  padding: 12px 12px;
 }
-.products{
-    display: flex;
+.products {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
 }
-.product{
-    display: flex;
-    flex-direction: column;
-    padding: 8px 8px;
-    margin: 10px 10px;
-    background-color: antiquewhite;
+.product {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px;
+  margin: 10px 10px;
+  background-color: antiquewhite;
+}
+.product li{
+    font-family: "Noto Serif KR", serif;
 }

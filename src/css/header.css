@@ -1,5 +1,6 @@
 * {
   margin: 0 0;
+  padding: 0px 12px;
 }
 /* header */
 .header-container {
@@ -22,6 +23,18 @@
   border: 0px;
   color: black;
 }
+
+/* logo */
+#header-logo {
+  padding: 12px;
+  width: 100%;
+  font-size: xx-large;
+  font-style: bold;
+  letter-spacing: 1px; /* 글자 간격 */
+  text-decoration: none; /* 링크 밑줄 */
+  color: inherit; /* 링크 색상 없애기 */
+}
+
 /* search */
 .search-container {
   flex: 5;
@@ -35,7 +48,7 @@
 }
 
 #search-input {
-  display:block;
+  display: block;
   width: 100%;
   padding: 0 8px;
   margin: 0 0;
