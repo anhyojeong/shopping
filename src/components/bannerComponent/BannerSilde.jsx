@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/home.css";
+import "../../css/home.css";
 
 const BannerSlide = ({ images }) => {
   const [currentImage, setCurrentImage] = useState(0);

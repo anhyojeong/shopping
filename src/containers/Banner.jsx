@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import LoadStorageImages from "../hooks/LoadStorageImages";
-import BannerSlide from "../components/BannerSilde";
+import BannerSlide from "../components/bannerComponent/BannerSilde";
+import "../css/banner.css";
 
 const Banner = () => {
   const [imageUrls, setImageUrls] = useState([]);

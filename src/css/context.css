@@ -13,7 +13,7 @@ ul {
   height: 60px;
   border-radius: 15px;
   margin: 10px 10px;
-  background-color: #f5ebe0;
+  background-color: #f4f3ee;
   text-align: center;
   /* 글자 중앙 정렬 하기 위해서 */
   display: flex;
@@ -22,8 +22,11 @@ ul {
   font-size: larger;
   letter-spacing: 1px; /* 글자 간격 */
 }
-.category.selected {
-  background-color: #d5bdaf;
+.category:hover  {
+  background-color: #d8d4cd;
+}
+.category.selected{
+  background-color: #bcb8b1;
 }
 
 /* 물건 */
@@ -31,24 +34,41 @@ ul {
   display: flex;
   flex-direction: column;
   padding: 12px 18px;
+  padding-right: 0;
   width: 100%;
 }
 #category-name {
   margin-left: 18px;
-  font-size: xx-large;
+  font-size: 2em;
+  font-style: italic;
 }
 .products {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 .product {
   display: flex;
   flex-direction: column;
-  padding: 8px 8px;
+  justify-content: center;
+  align-items: center;
   margin-top: 18px;
   margin-left: 18px;
-  background-color: antiquewhite;
 }
-.product li{
-    font-family: "Noto Serif KR", serif;
+.product li {
+  font-family: "Noto Serif KR", serif;
+}
+.product-image {
+  width: 250px; /* 원하는 고정된 너비 설정 */
+  height: auto; /* 높이를 자동으로 조절하여 가로세로 비율을 유지 */
+}
+#product-brand {
+  padding-bottom: 2px;
+  font-weight: bold;
+  font-size: small;
+}
+#product-name{
+  padding-bottom: 4px;
+}
+#product-price {
+  font-weight: bolder;
 }

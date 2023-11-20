@@ -2,7 +2,7 @@ import { useState, useEffect} from 'react';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import { storage } from '../firebase'; 
 
-const LoadStorageImage =  (folderPath) => {
+const LoadStorageImage = (folderPath) => {
   const [imageUrls, setImageUrls] = useState([]);
 
   useEffect(() => {

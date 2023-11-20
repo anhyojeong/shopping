@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { login } from '../redux/authActions';
-import { auth } from "../firebase"; // Firebase 모듈에서 auth 가져오기
+import { login } from '../../redux/authActions';
+import { auth } from "../../firebase"; // Firebase 모듈에서 auth 가져오기
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {
@@ -18,6 +18,8 @@ const SignIn = () => {
       const response = await signInWithEmailAndPassword(auth, email, password);
       dispatch(login(response.user));
       console.log(response.user.uid);
+      console.log(response.user.displayName);
+
       navigate("/");
     } catch (error) {
       console.error(error.code, error.message);

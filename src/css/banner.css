@@ -1,0 +1,24 @@
+/* banner */
+.banner-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 12px;
+  }
+  
+  .slide-container {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .slide {
+    display: flex;
+    justify-content: center;
+    height: 40vh;
+  }
+  
+  .slide-img{
+    width: 100%; /* 원하는 고정된 너비 설정 */
+    height: auto; /* 높이를 자동으로 조절하여 가로세로 비율을 유지 */
+  }
+  
