@@ -1,3 +1,18 @@
 .user-info-container{
     padding: 12% 5%;
 }
+
+.user-name{
+    font-size: 2em;
+    padding-bottom: 2%;
+}
+.viewed-items-container{
+    padding : 1%;
+}
+.viewed-items-title{
+    font-size : 1.5em;
+    border-bottom : 1px solid black;
+}
+.viewed-items{
+    list-style: none;
+}

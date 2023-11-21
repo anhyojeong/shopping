@@ -10,9 +10,10 @@ const RecentItems = () => {
   });
 
   return (
-    <div>
+    <div className="viewed-items-container">
+        <p className="viewed-items-title">최근 본 상품</p>
       {viewedItems.map((viewedItem, index) => (
-        <li key={index}>{viewedItem}</li>
+        <li className="viewed-items" key={index}>{viewedItem}</li>
       ))}
     </div>
   );
