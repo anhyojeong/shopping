@@ -10,6 +10,7 @@ export const logout = () => ({
 // 리듀서
 const initialState = {
   user: null,
+  userInfo: "",
 };
 
 const authReducer = (state = initialState, action) => {
