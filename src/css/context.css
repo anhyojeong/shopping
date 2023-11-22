@@ -46,7 +46,7 @@ ul {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-.product {
+.product-area {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,8 +54,12 @@ ul {
   margin-top: 18px;
   margin-left: 18px;
 }
-.product li {
+.product-area li {
   font-family: "Noto Serif KR", serif;
+}
+.product{
+  display: block;
+  width: 250px;
 }
 .product-image {
   width: 250px; /* 원하는 고정된 너비 설정 */
@@ -71,4 +75,10 @@ ul {
 }
 #product-price {
   font-weight: bolder;
+}
+/* 물건 이름 길면 안보이게*/
+.product-area #product-name.ellipsis {
+  overflow:hidden; 
+  text-overflow:ellipsis; 
+  white-space:nowrap;
 }

@@ -14,7 +14,7 @@ const BannerImage = ({ selectedCategory, product }) => {
         const url = await getDownloadURL(imageRef);
         setImageUrl(url);
       } catch (error) {
-        console.error("Error getting image URL:", error);
+        // console.error("Error getting image URL:", error);
       }
     };
 

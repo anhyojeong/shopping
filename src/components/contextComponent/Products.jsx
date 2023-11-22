@@ -33,14 +33,14 @@ const Products = ({ selectedCategory }) => {
       <p id="category-name">{selectedCategory}</p>
       <div className="products">
         {products.map((product, index) => (
-          <div className="product" key={index} onClick={() => storeViewItem(product.name)}>
-            <ul>
+          <div className="product-area" key={index} onClick={() => storeViewItem(product.name)}>
+            <ul className="product">
               <BannerImage
                 selectedCategory={selectedCategory}
                 product={product}
               />
               <li id="product-brand">{product.brand}</li>
-              <li id="product-name">{product.name}</li>
+              <li id="product-name" className="ellipsis">{product.name}</li>
               <li id="product-price">{product.price}원</li>
             </ul>
           </div>
