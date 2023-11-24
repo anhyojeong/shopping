@@ -6,8 +6,8 @@ import { addItem, selectItem } from "../../redux/itemActions";
 import LoadDB from "../../hooks/LoadDB";
 import ItemsImage from "./ItemsImage";
 
-const Products = ({ selectedCategory }) => {
-  const [products, setProducts] = useState([]); // 가져온 물건들
+const Items = ({ selectedCategory }) => {
+  const [itmes, setItmes] = useState([]); // 가져온 물건들
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ const Products = ({ selectedCategory }) => {
     const fetchData = async () => {
       try {
         const data = await LoadDB({ selectedCategory });
-        setProducts(data);
+        setItmes(data);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -33,14 +33,14 @@ const Products = ({ selectedCategory }) => {
   // 제품 상세 페이지
   const goToItemDetail = (product) => {
     dispatch(selectItem(product));
-    navigate("/itemInfo");
+    navigate(`/itemInfo/${selectedCategory}/${product.name}`);
   };
 
   return (
     <div className="products-container">
       <p id="category-name">{selectedCategory}</p>
       <div className="products">
-        {products.map((product, index) => (
+        {itmes.map((product, index) => (
           <div
             className="product-area"
             key={index}
@@ -67,4 +67,4 @@ const Products = ({ selectedCategory }) => {
   );
 };
 
-export default Products;
+export default Items;

@@ -16,3 +16,4 @@ const LoadDB = async ({selectedCategory}) => {
 };
 
 export default LoadDB;
+

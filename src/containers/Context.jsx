@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Category from "../components/context/Category";
-import Products from "../components/context/Products";
+import Items from "../components/context/Items";
 import "../css/context.css";
 
 const Context = () => {
@@ -20,7 +20,7 @@ const Context = () => {
         selectedCategory={selectedCategory}
         onSelect={handleCategorySelect}
       />
-      <Products selectedCategory={selectedCategory} />
+      <Items selectedCategory={selectedCategory} />
     </div>
   );
 };
