@@ -4,15 +4,23 @@ export const addItem = (item) => ({
   payload: item,
 });
 
+// 아이템 선택
+export const selectItem = (selectItem) => ({
+  type: "SELECTITEM",
+  payload: selectItem,
+});
+
 // 리듀서
 const MAX_ITEMS = 15; // 최대 아이템 수 (15개)
 
 const initialState = {
   items: [],
+  selectItem: {},
 };
 
 const itemReducer = (state = initialState, action) => {
   switch (action.type) {
+    // 최근 본 상품
     case "ADDITEM":
       const newItem = action.payload;
 
@@ -45,6 +53,9 @@ const itemReducer = (state = initialState, action) => {
         return { ...state, items: updatedItems };
       }
 
+    // 아이템 상세 페이지
+    case "SELECTITEM":
+      return { ...state, selectItem: action.payload };
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import LoadStorageImages from "../hooks/LoadStorageImages";
-import BannerSlide from "../components/bannerComponent/BannerSilde";
+import BannerSlide from "../components/banner/BannerSilde";
 import "../css/banner.css";
 
 const Banner = () => {
@@ -15,11 +15,7 @@ const Banner = () => {
 
   return (
     <div className="banner-container">
-       {imageUrls.length ? (
-        <BannerSlide images={imageUrls} />
-      ) : (
-        <></>
-      )}
+      {imageUrls.length ? <BannerSlide images={imageUrls} /> : <></>}
     </div>
   );
 };

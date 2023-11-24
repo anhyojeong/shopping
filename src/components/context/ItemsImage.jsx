@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 
-const BannerImage = ({ selectedCategory, product }) => {
+const ItemsImage = ({ selectedCategory, product}) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   // 이미지 가져오기
@@ -36,4 +36,4 @@ const BannerImage = ({ selectedCategory, product }) => {
   );
 };
 
-export default BannerImage;
+export default ItemsImage;

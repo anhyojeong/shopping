@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Nav from "../components/headerComponent/Navigation ";
-import Search from "../components/headerComponent/Search";
+import Nav from "../components/header/Navigation ";
+import Search from "../components/header/Search";
 
 const Header = () => {
   return (

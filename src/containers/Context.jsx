@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import Category from "../components/contextComponent/Category";
-import Products from "../components/contextComponent/Products";
+import Category from "../components/context/Category";
+import Products from "../components/context/Products";
 import "../css/context.css";
 
 const Context = () => {

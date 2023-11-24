@@ -4,6 +4,7 @@ import Header from "./containers/Header";
 import Sign from "./routes/Sign";
 import Home from "./routes/Home";
 import UserInfo from "./routes/UserInfo";
+import ItemInfo from "./routes/ItemInfo";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/sign" element={<Sign />} />
           <Route path="/userInfo" element={<UserInfo />} />
+          <Route path ="/itemInfo" element={<ItemInfo />} />
         </Routes>
     </Router>
   );

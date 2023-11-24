@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import RecentItems from "../components/useInfoComponent/RecentItems";
-import OrderList from "../components/useInfoComponent/OrderList";
+import RecentItems from "../components/useInfo/RecentItems";
+import OrderList from "../components/useInfo/OrderList";
 import "../css/userInfo.css";
 
 const UserInfo = () => {
