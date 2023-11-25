@@ -1,9 +1,9 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from "../firebase";
+import useItemsImage from "../hooks/useItemsImage";
 import "../css/itemInfo.css";
 
 const ItemInfo = () => {
@@ -45,6 +45,9 @@ const ItemInfo = () => {
     fetchData();
   }, [searchTerm]); //searchTerm변경될 때마다
 
+  // 이미지 URL 가져오기
+  const imageUrl = useItemsImage(category, searchResults[0]?.name);
+
   // 장바구니 버튼
   const getItemAtCart = () => {
     if (!isUser) {
@@ -62,27 +65,37 @@ const ItemInfo = () => {
   };
 
   return (
-    <div className="item-container">
-      <div className="item-img-container">
-        <img src={searchResults.image} alt={searchResults.name} />
-      </div>
+    <div className="container">
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="item-info-container">
-          {searchResults.map((result) => (
-            <ul key={result.id}>
-              <li>{result.brand}</li>
-              <li>{result.name}</li>
-              <li>{result.price}</li>
-            </ul>
-          ))}
+        <div className="item-container">
+          <div className="item-img-container">
+            {imageUrl ? (
+              <img
+                id="item-image"
+                src={imageUrl}
+                alt={`${category} - ${searchResults[0]?.name}`}
+              />
+            ) : (
+              <p>Loading image...</p>
+            )}
+          </div>
+          <div className="item-info-container">
+            {searchResults.map((result) => (
+              <ul key={result.id}>
+                <li className="item-brand">{result.brand}</li>
+                <li className="item-name">{result.name}</li>
+                <li className="item-price">{result.price}원</li>
+              </ul>
+            ))}
+          </div>
+          <div className="item-btn-container">
+            <button onClick={getItemAtCart}>장바구니</button>
+            <button onClick={goBuy}>바로구매</button>
+          </div>
         </div>
       )}
-      <div className="item-btn-container">
-        <button onClick={getItemAtCart}>장바구니</button>
-        <button onClick={goBuy}>바로구매</button>
-      </div>
     </div>
   );
 };

@@ -26,39 +26,39 @@ const Items = ({ selectedCategory }) => {
   }, [selectedCategory]); // selectedCategory 변경될 때마다 useEffect 실행
 
   // 최근 본 상품 저장
-  const storeViewItem = (selectedProduct) => {
-    dispatch(addItem(selectedProduct)); // 최근 본 상품 저장
+  const storeViewItem = (selectedItem) => {
+    dispatch(addItem(selectedItem)); // 최근 본 상품 저장
   };
 
   // 제품 상세 페이지
-  const goToItemDetail = (product) => {
-    dispatch(selectItem(product));
-    navigate(`/itemInfo/${selectedCategory}/${product.name}`);
+  const goToItemDetail = (item) => {
+    dispatch(selectItem(item));
+    navigate(`/itemInfo/${selectedCategory}/${item.name}`);
   };
 
   return (
-    <div className="products-container">
+    <div className="items-container">
       <p id="category-name">{selectedCategory}</p>
-      <div className="products">
-        {itmes.map((product, index) => (
+      <div className="items">
+        {itmes.map((item, index) => (
           <div
-            className="product-area"
+            className="item-area"
             key={index}
             onClick={() => {
-              storeViewItem(product.name); // 최근 본 상품 이름 저장
-              goToItemDetail(product); // 상품 상세 페이지
+              storeViewItem(item.name); // 최근 본 상품 이름 저장
+              goToItemDetail(item); // 상품 상세 페이지
             }}
           >
-            <ul className="product">
+            <ul className="item">
               <ItemsImage
                 selectedCategory={selectedCategory}
-                product={product}
+                item={item}
               />
-              <li id="product-brand">{product.brand}</li>
-              <li id="product-name" className="ellipsis">
-                {product.name}
+              <li className="item-brand">{item.brand}</li>
+              <li className="item-name ellipsis">
+                {item.name}
               </li>
-              <li id="product-price">{product.price}원</li>
+              <li className="item-price">{item.price}원</li>
             </ul>
           </div>
         ))}

@@ -6,9 +6,9 @@ const LoadDB = async ({selectedCategory}) => {
     try {    
         const querySnapshot = await getDocs(collection(firestore, selectedCategory));
     
-        const products = querySnapshot.docs.map((doc) => doc.data());
+        const items = querySnapshot.docs.map((doc) => doc.data());
     
-        return products;
+        return items;
       } catch (error) {
         console.error("Error loading data:", error);
         throw error;
