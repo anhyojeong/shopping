@@ -9,6 +9,7 @@
 .home-container {
   display: flex;
   flex-direction: column;
-  padding: 7% 5%;
+  margin-top: 15vh;
+  padding: 0% 5%;
 }
 
