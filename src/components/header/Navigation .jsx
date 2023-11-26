@@ -6,7 +6,6 @@ import { login, logout } from "../../redux/authActions";
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag, faUser } from "@fortawesome/free-solid-svg-icons";
-
 // css
 import "../../css/header.css";
 

@@ -77,7 +77,7 @@ ul {
   font-weight: bolder;
 }
 /* 물건 이름 길면 안보이게*/
-.item-area #item-name.ellipsis {
+.ellipsis {
   overflow:hidden; 
   text-overflow:ellipsis; 
   white-space:nowrap;

@@ -58,7 +58,7 @@ const Items = ({ selectedCategory }) => {
               <li className="item-name ellipsis">
                 {item.name}
               </li>
-              <li className="item-price">{item.price}원</li>
+              <li className="item-price">{item.price.toLocaleString()}원</li>
             </ul>
           </div>
         ))}

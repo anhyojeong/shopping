@@ -4,6 +4,10 @@ import { useSelector } from "react-redux";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
+// 아이콘
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus,faPlus } from "@fortawesome/free-solid-svg-icons";
+// css
 import "../css/itemInfo.css";
 
 const ItemInfo = () => {
@@ -13,7 +17,8 @@ const ItemInfo = () => {
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
   const [searchTerm, setSearchTerm] = useState(itemName); // 초기값을 useParams에서 가져온 itemName으로 설정
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
-
+  const [numOfOrderItems, setNumOfOrderItems] = useState(0); // 주문할 아이템 수
+  const [totalAmount, setAmount] = useState(0);
   const isUser = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
@@ -48,8 +53,23 @@ const ItemInfo = () => {
   // 이미지 URL 가져오기
   const imageUrl = useItemsImage(category, searchResults[0]?.name);
 
+  // 구매 수량 빼기
+  const minusOrderItemNum = () => {
+    if (numOfOrderItems > 0) {
+      // 0개 이상
+      setNumOfOrderItems(numOfOrderItems - 1);
+      setAmount((numOfOrderItems - 1) * searchResults[0]?.price);
+    }
+  };
+
+  // 구매 수량 더하기
+  const plusOrderItemNum = () => {
+    setNumOfOrderItems(numOfOrderItems + 1);
+    setAmount((numOfOrderItems + 1) * searchResults[0]?.price);
+  };
+
   // 장바구니 버튼
-  const getItemAtCart = () => {
+  const addToCart = () => {
     if (!isUser) {
       alert("로그인 이후 이용 가능합니다.");
       navigate("/sign");
@@ -57,7 +77,7 @@ const ItemInfo = () => {
   };
 
   // 바로구매 버튼
-  const goBuy = () => {
+  const goBuyNow = () => {
     if (!isUser) {
       alert("로그인 이후 이용 가능합니다.");
       navigate("/sign");
@@ -69,7 +89,7 @@ const ItemInfo = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="item-container">
+        <>
           <div className="item-img-container">
             {imageUrl ? (
               <img
@@ -81,20 +101,40 @@ const ItemInfo = () => {
               <p>Loading image...</p>
             )}
           </div>
-          <div className="item-info-container">
-            {searchResults.map((result) => (
-              <ul key={result.id}>
-                <li className="item-brand">{result.brand}</li>
-                <li className="item-name">{result.name}</li>
-                <li className="item-price">{result.price}원</li>
-              </ul>
-            ))}
+          <div className="item-container">
+            <div className="item-info-container">
+              {searchResults.map((result) => (
+                <ul key={result.id}>
+                  <li className="item-brand" id="brand">{result.brand}</li>
+                  <li className="item-name" id="name">{result.name}</li>
+                  <li className="item-price" id="price"> {result.price.toLocaleString()}원</li>
+                </ul>
+              ))}
+            </div>
+            <div className="item-orderSheet-container">
+              <div className="orderSheet-item-count-area">
+              <button>
+                <FontAwesomeIcon
+                  icon={faMinus}
+                  onClick={minusOrderItemNum}
+                />
+              </button>
+                <span className="orderSheet-label">{numOfOrderItems}</span>
+                <button>
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  onClick={plusOrderItemNum}
+                />
+              </button>
+              </div>
+              <span className="orderSheet-label">총 금액 : {totalAmount.toLocaleString()}원</span>
+            </div>
+            <div className="item-btn-container">
+              <button id ="item-cart" onClick={addToCart}>장바구니</button>
+              <button id ="item-buy"onClick={goBuyNow}>바로구매</button>
+            </div>
           </div>
-          <div className="item-btn-container">
-            <button onClick={getItemAtCart}>장바구니</button>
-            <button onClick={goBuy}>바로구매</button>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
