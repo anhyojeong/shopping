@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
-import useAddFirestore from "../hooks/useAddFirestore"; 
+import useAddFirestore from "../hooks/useAddFirestore";
 
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +24,7 @@ import "../css/itemInfo.css";
 const ItemInfo = () => {
   // URL 매개변수에서 선택한 카테고리랑 아이템 이름 가져오기
   const { itemName, category } = useParams();
-  const user = useSelector((state) => state.auth.user);   // 리덕스에서 유저 정보 가져오기
+  const user = useSelector((state) => state.auth.user); // 리덕스에서 유저 정보 가져오기
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
   const [searchTerm, setSearchTerm] = useState(itemName); // 초기값을 useParams에서 가져온 itemName으로 설정
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
@@ -77,11 +77,23 @@ const ItemInfo = () => {
     setAmount((numOfOrderItems + 1) * searchResults[0]?.price);
   };
 
-// 장바구니 버튼
-const { addCart } = useAddFirestore(user, "Cart", searchResults, numOfOrderItems, totalAmount);
+  // 장바구니 버튼
+  const { addCart } = useAddFirestore(
+    user,
+    "Cart",
+    searchResults,
+    numOfOrderItems,
+    totalAmount
+  );
 
-// 바로구매 버튼
-const { addFirestore: buyNow } = useAddFirestore(user, "Buy", searchResults, numOfOrderItems, totalAmount);;
+  // 바로구매 버튼
+  const { addFirestore: buyNow } = useAddFirestore(
+    user,
+    "Buy",
+    searchResults,
+    numOfOrderItems,
+    totalAmount
+  );
 
   return (
     <div className="container">
@@ -119,12 +131,12 @@ const { addFirestore: buyNow } = useAddFirestore(user, "Buy", searchResults, num
             </div>
             <div className="item-orderSheet-container">
               <div className="orderSheet-item-count-area">
-                <button>
-                  <FontAwesomeIcon icon={faMinus} onClick={minusOrderItemNum} />
+                <button onClick={minusOrderItemNum}>
+                  <FontAwesomeIcon icon={faMinus} />
                 </button>
                 <span className="orderSheet-label">{numOfOrderItems}</span>
-                <button>
-                  <FontAwesomeIcon icon={faPlus} onClick={plusOrderItemNum} />
+                <button onClick={plusOrderItemNum}>
+                  <FontAwesomeIcon icon={faPlus} />
                 </button>
               </div>
               <span className="orderSheet-label">
