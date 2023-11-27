@@ -5,6 +5,7 @@ import Sign from "./routes/Sign";
 import Home from "./routes/Home";
 import UserInfo from "./routes/UserInfo";
 import ItemInfo from "./routes/ItemInfo";
+import Cart from "./routes/Cart";
 
 const App = () => {
   return (
@@ -13,8 +14,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign" element={<Sign />} />
-          <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/userInfo/:user" element={<UserInfo />} />
           <Route path ="/itemInfo/:category/:itemName" element={<ItemInfo />} />
+          <Route path ="/cart/:user" element={<Cart />}/>
         </Routes>
     </Router>
   );

@@ -12,7 +12,7 @@ import "../../css/header.css";
 const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user); //리덕스 스토어에서 사용자 정보를 가져옴
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -21,6 +21,7 @@ const Navigation = () => {
     }
   }, [dispatch]);
 
+  // #region 로그인, 로그아웃
   const handleLoginClick = () => {
     navigate("/sign");
   };
@@ -29,13 +30,27 @@ const Navigation = () => {
     dispatch(logout());
   };
 
-  const handleWishListClick = () => {
-    // 장바구니
+  // #endregion
+
+  // 장바구니
+  const handleCartClick = () => {
+    if (!user) {
+      alert("로그인 이후 이용 가능합니다.");
+      navigate("/sign");
+      return;
+    }
+    navigate(`/cart/${user.email}`);
   };
 
   // userInfo
   const handleUserInfoClick = () => {
-    navigate("/userInfo");
+    if (!user) {
+      alert("로그인 이후 이용 가능합니다.");
+      navigate("/sign");
+      return;
+    }
+
+      navigate(`/userInfo/${user.email}`);
   };
 
   return (
@@ -49,7 +64,7 @@ const Navigation = () => {
                 <FontAwesomeIcon
                   size="2x"
                   icon={faShoppingBag}
-                  onClick={handleWishListClick}
+                  onClick={handleCartClick}
                 />
               </button>
             </li>

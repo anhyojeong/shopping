@@ -13,6 +13,8 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
+import useAddFirestore from "../hooks/useAddFirestore"; 
+
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -22,14 +24,12 @@ import "../css/itemInfo.css";
 const ItemInfo = () => {
   // URL 매개변수에서 선택한 카테고리랑 아이템 이름 가져오기
   const { itemName, category } = useParams();
-  // 리덕스에서 유저 정보 가져오기
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);   // 리덕스에서 유저 정보 가져오기
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
   const [searchTerm, setSearchTerm] = useState(itemName); // 초기값을 useParams에서 가져온 itemName으로 설정
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [numOfOrderItems, setNumOfOrderItems] = useState(0); // 주문할 아이템 수
   const [totalAmount, setAmount] = useState(0);
-  const isUser = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,66 +77,11 @@ const ItemInfo = () => {
     setAmount((numOfOrderItems + 1) * searchResults[0]?.price);
   };
 
-  // 장바구니 버튼
-  const addToCart = async () => {
-    if (!isUser) {
-      alert("로그인 이후 이용 가능합니다.");
-      navigate("/sign");
-      return;
-    }
-    if (numOfOrderItems < 1) {
-      alert("상품의 수량은 1개 이상이어야 합니다.");
-    } else {
-      try {
-        // 유저의 장바구니 문서 참조
-        const cartDocRef = doc(
-          firestore,
-          `${user.displayName}Cart`,
-          searchResults[0].name
-        );
+// 장바구니 버튼
+const { addCart } = useAddFirestore(user, "Cart", searchResults, numOfOrderItems, totalAmount);
 
-        // 해당 문서의 스냅샷 가져오기
-        const cartDocSnapshot = await getDoc(cartDocRef);
-
-        // 이미 장바구니에 해당 아이템이 존재하는 경우
-        if (cartDocSnapshot.exists()) {
-          alert("장바구니에 같은 상품이 이미 존재합니다.");
-          // const currentAmount = cartDocSnapshot.data().amount || 0;
-          // const currentTotalPrice = cartDocSnapshot.data().totalPrice || 0;
-
-          // // 총 주문 수량 및 총 금액 업데이트
-          // const updatedAmount = currentAmount + numOfOrderItems;
-          // const updatedTotalPrice = currentTotalPrice + totalAmount;
-
-          // // 해당 필드 업데이트
-          // await updateDoc(cartDocRef, {
-          //   amount: updatedAmount,
-          //   totalPrice: updatedTotalPrice,
-          // });
-        } else {
-          // 장바구니에 해당 아이템이 존재하지 않는 경우
-          const cartData = {
-            numOfOrderItems: numOfOrderItems,
-            totalAmount: totalAmount,
-          };
-
-          // 새로운 문서 추가
-          await setDoc(cartDocRef, cartData);
-          alert("장바구니에 추가되었습니다.");
-        }
-      } catch (error) {
-        console.error("Error adding to cart:", error);
-      }
-    }
-  };
-
-  // 바로구매 버튼
-  const goBuyNow = () => {
-    if (!isUser) {
-      alert("로그인 이후 이용 가능합니다.");
-      navigate("/sign");
-    }
-  };
+// 바로구매 버튼
+const { addFirestore: buyNow } = useAddFirestore(user, "Buy", searchResults, numOfOrderItems, totalAmount);;
 
   return (
     <div className="container">
@@ -187,10 +132,10 @@ const ItemInfo = () => {
               </span>
             </div>
             <div className="item-btn-container">
-              <button id="item-cart" onClick={addToCart}>
+              <button id="item-cart" onClick={addCart}>
                 장바구니
               </button>
-              <button id="item-buy" onClick={goBuyNow}>
+              <button id="item-buy" onClick={buyNow}>
                 바로구매
               </button>
             </div>
