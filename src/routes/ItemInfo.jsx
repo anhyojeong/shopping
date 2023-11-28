@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   collection,
@@ -14,6 +14,7 @@ import {
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
 import useAddFirestore from "../hooks/useAddFirestore";
+import BuyModal from "../components/BuyModal";
 
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,7 +31,6 @@ const ItemInfo = () => {
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [numOfOrderItems, setNumOfOrderItems] = useState(0); // 주문할 아이템 수
   const [totalAmount, setAmount] = useState(0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +78,7 @@ const ItemInfo = () => {
   };
 
   // 장바구니 버튼
-  const { addCart } = useAddFirestore(
+  const { addCart} = useAddFirestore(
     user,
     "Cart",
     searchResults,
@@ -87,7 +87,7 @@ const ItemInfo = () => {
   );
 
   // 바로구매 버튼
-  const { addFirestore: buyNow } = useAddFirestore(
+  const {addCart :BuyCart} = useAddFirestore(
     user,
     "Buy",
     searchResults,
@@ -147,7 +147,7 @@ const ItemInfo = () => {
               <button id="item-cart" onClick={addCart}>
                 장바구니
               </button>
-              <button id="item-buy" onClick={buyNow}>
+              <button id="item-buy" onClick={BuyCart}>
                 바로구매
               </button>
             </div>

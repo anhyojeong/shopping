@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // 리덕스
 import { useSelector, useDispatch } from "react-redux";
 import { setCart, updateItemNum } from "../redux/cartActions";
@@ -15,6 +16,7 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "../css/cart.css";
 
 const Cart = () => {
+  const navigete = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const cartItems = useSelector((state) => state.cart.items); // Redux에서 물건들을 가져오기
@@ -143,7 +145,7 @@ const Cart = () => {
           <span>{totalOrderAmount.toLocaleString()}원</span>
         </div>
         <div className="order-type-container">
-          <button id="keepShopping-btn">계속 둘러보기</button>
+          <button id="keepShopping-btn" onClick={()=>navigete('/')}>계속 둘러보기</button>
           <button id="goOrder-btn">구매하기</button>
         </div>
       </section>
