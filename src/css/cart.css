@@ -1,5 +1,5 @@
-.acontainer{
-    margin: 20vh 20px 20px;
+.cart-order-container{
+    margin: 15vh 20px 20px;
 }
 .cart-container {
   width: 100%;
@@ -12,7 +12,7 @@
 /* 장바구니 컨테이너들 */
 .cart-title-container,
 .cart-item-container {
-  width: 90%;
+  width: 80%;
   flex-basis: 33.3%;
   display: flex;
   justify-content: space-between;

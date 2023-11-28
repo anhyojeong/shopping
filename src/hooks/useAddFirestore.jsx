@@ -8,7 +8,9 @@ const useAddFirestore = (user, type, searchResults, numOfOrderItems, totalAmount
       alert("로그인 이후 이용 가능합니다.");
       return;
     }
-
+    if(numOfOrderItems<1){
+      alert("주문 수량은 최소 1개 이상이어야 합니다.");
+    }
     try {
       // 유저의 문서 참조
       const docRef = doc(

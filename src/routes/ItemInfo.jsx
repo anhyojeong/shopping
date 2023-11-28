@@ -83,7 +83,7 @@ const ItemInfo = () => {
     "Cart",
     searchResults,
     numOfOrderItems,
-    totalAmount
+    searchResults[0]?.price
   );
 
   // 바로구매 버튼
@@ -92,7 +92,7 @@ const ItemInfo = () => {
     "Buy",
     searchResults,
     numOfOrderItems,
-    totalAmount
+    searchResults[0]?.price
   );
 
   return (
