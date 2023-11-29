@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import UserInfo from "./routes/UserInfo";
 import ItemInfo from "./routes/ItemInfo";
 import Cart from "./routes/Cart";
+import Order from "./routes/Order";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/userInfo/:user" element={<UserInfo />} />
           <Route path ="/itemInfo/:category/:itemName" element={<ItemInfo />} />
           <Route path ="/cart/:user" element={<Cart />}/>
+          <Route path ="/order/:user" element={<Order />}/>
         </Routes>
     </Router>
   );

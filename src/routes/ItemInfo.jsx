@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   collection,
@@ -14,7 +14,6 @@ import {
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
 import useAddFirestore from "../hooks/useAddFirestore";
-import BuyModal from "../components/BuyModal";
 
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +24,7 @@ import "../css/itemInfo.css";
 const ItemInfo = () => {
   // URL 매개변수에서 선택한 카테고리랑 아이템 이름 가져오기
   const { itemName, category } = useParams();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user); // 리덕스에서 유저 정보 가져오기
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
   const [searchTerm, setSearchTerm] = useState(itemName); // 초기값을 useParams에서 가져온 itemName으로 설정
@@ -78,7 +78,7 @@ const ItemInfo = () => {
   };
 
   // 장바구니 버튼
-  const { addCart} = useAddFirestore(
+  const {addCart} = useAddFirestore(
     user,
     "Cart",
     searchResults,
@@ -86,14 +86,10 @@ const ItemInfo = () => {
     searchResults[0]?.price
   );
 
-  // 바로구매 버튼
-  const {addCart :BuyCart} = useAddFirestore(
-    user,
-    "Buy",
-    searchResults,
-    numOfOrderItems,
-    searchResults[0]?.price
-  );
+  // 바로구매 버튼 
+  const handleBuyNowClick = () => {
+    navigate(`/order/${user.email}`, { state: { selectedItems: searchResults, quantity: numOfOrderItems } });
+  };
 
   return (
     <div className="container">
@@ -147,7 +143,7 @@ const ItemInfo = () => {
               <button id="item-cart" onClick={addCart}>
                 장바구니
               </button>
-              <button id="item-buy" onClick={BuyCart}>
+              <button id="item-buy" onClick={handleBuyNowClick}>
                 바로구매
               </button>
             </div>

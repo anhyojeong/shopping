@@ -52,6 +52,9 @@ const Cart = () => {
 
   // 주문 수량 변경
   const handleQuantityChange = async (item, newNumOfOrderItems) => {
+    // 장바구니 내에 수량 최소 1개
+    newNumOfOrderItems = Math.max(1, newNumOfOrderItems); 
+    
     const updatedItem = {
       // 새로 업데이트 할 아이템 ( 수량 변경된 거 )
       ...item,
@@ -94,6 +97,10 @@ const Cart = () => {
       console.error("db 오류 : ", error);
     }
   };
+
+  const handleOrderBtn = ()=>{
+    navigete(`/order/${user.email}`, { state: { selectedItems: cartItems, quantity: totalOrderAmount } });
+  }
 
   // #region 렌더링
   // 유저 가져오기 전까지 아무것도 렌더링하지 않음
@@ -146,7 +153,7 @@ const Cart = () => {
         </div>
         <div className="order-type-container">
           <button id="keepShopping-btn" onClick={()=>navigete('/')}>계속 둘러보기</button>
-          <button id="goOrder-btn">구매하기</button>
+          <button id="goOrder-btn" onClick={handleOrderBtn}>구매하기</button>
         </div>
       </section>
     </div>
