@@ -46,13 +46,14 @@ const useAddFirestore = (
       }
       // 바로 구매
       else{
+        console.log("바로구매");
         const inputData = {
           name: searchResults[0].name,
           numOfOrderItems: numOfOrderItems,
           totalAmount: totalAmount *numOfOrderItems,
         };
         await setDoc(docRef, inputData);
-
+        console.log(inputData);
       }
     } catch (error) {
       console.error("에러 : ", error);

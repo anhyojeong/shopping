@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  updateDoc,
-  setDoc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
 import useAddFirestore from "../hooks/useAddFirestore";
@@ -78,7 +69,7 @@ const ItemInfo = () => {
   };
 
   // 장바구니 버튼
-  const {addCart} = useAddFirestore(
+  const { addCart } = useAddFirestore(
     user,
     "Cart",
     searchResults,
@@ -86,9 +77,11 @@ const ItemInfo = () => {
     searchResults[0]?.price
   );
 
-  // 바로구매 버튼 
+  // 바로구매 버튼
   const handleBuyNowClick = () => {
-    navigate(`/order/${user.email}`, { state: { selectedItems: searchResults, quantity: numOfOrderItems } });
+    navigate(`/order/${user.email}`, {
+      state: { selectedItems: searchResults, quantity: numOfOrderItems },
+    });
   };
 
   return (
