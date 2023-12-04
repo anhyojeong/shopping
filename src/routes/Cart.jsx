@@ -99,7 +99,7 @@ const Cart = () => {
   };
 
   const handleOrderBtn = ()=>{
-    navigete(`/order/${user.email}`, { state: { selectedItems: cartItems, price: totalOrderPrice } });
+    navigete(`/order/${user.email}`, { state: { willBuyItems: cartItems } });
   }
 
   // #region 렌더링
