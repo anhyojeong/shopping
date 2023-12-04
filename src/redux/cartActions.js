@@ -27,7 +27,7 @@ const cartReducer = (state = initialState, action) => {
         if (item.name === action.payload.name) {
           return {
             ...item,
-            numOfOrderItems: action.payload.numOfOrderItems,
+            quantity: action.payload.quantity,
           };
         }
         return item;

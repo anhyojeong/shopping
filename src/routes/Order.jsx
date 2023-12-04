@@ -1,6 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import useAddBuy from "../hooks/useAddBuy";
+
 const Order = () => {
   // 네비게이션 중 state 가져오기
   const location = useLocation();
@@ -8,9 +10,14 @@ const Order = () => {
   const { selectedItems, quantity } = location.state;
 
   // 구매하기 버튼
-  const  handleBuyBtn = ()=>{
-
-  }
+  const { addBuy } = useAddBuy(
+    user,
+    selectedItems.map((item) => ({
+      name: item.name,
+      price: item.price,
+      quantity: quantity,
+    }))
+  );
 console.log(selectedItems, quantity);
   return (
     <div className="cart-order-container">
@@ -20,14 +27,14 @@ console.log(selectedItems, quantity);
           {selectedItems.map((item) => (
             <ul key={item.id}>
               <li>{item.name}</li>
-              <li> {item.numOfOrderItems}</li>
+              <li> {item.quantity}</li>
             </ul>
           ))}
         </>
         <p>금액: {quantity}</p>
       </div>
       <div>
-        <button onClick={handleBuyBtn}>결제하기</button>
+        <button onClick={addBuy}>결제하기</button>
       </div>
     </div>
   );

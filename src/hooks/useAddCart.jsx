@@ -1,19 +1,18 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase";
 
-const useAddFirestore = (
+const useAddCart = (
   user,
   type,
   searchResults,
-  numOfOrderItems,
-  totalAmount
+  quantity,
 ) => {
   const addCart = async () => {
     if (!user) {
       alert("로그인 이후 이용 가능합니다.");
       return;
     }
-    if (numOfOrderItems < 1) {
+    if (quantity < 1) {
       alert("주문 수량은 최소 1개 이상이어야 합니다.");
       return;
     }
@@ -36,8 +35,8 @@ const useAddFirestore = (
         } else {
           const inputData = {
             name: searchResults[0].name,
-            numOfOrderItems: numOfOrderItems,
-            totalAmount: totalAmount,
+            quantity: quantity,
+            price: searchResults[0].price,
           };
           await setDoc(docRef, inputData);
 
@@ -51,4 +50,4 @@ const useAddFirestore = (
   return { addCart };
 };
 
-export default useAddFirestore;
+export default useAddCart;

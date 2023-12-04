@@ -20,9 +20,9 @@ const Cart = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const cartItems = useSelector((state) => state.cart.items); // Redux에서 물건들을 가져오기
-  const [totalOrderAmount, setTotalOrderAmount] = useState(0); // 총 금액
+  const [totalOrderPrice, setTotalOrderPrice] = useState(0); // 총 금액
 
-  // firestore에서 물건들 가져오기
+  // firestore에서 유저 장바구니에 있는 물건들 가져오기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,22 +43,22 @@ const Cart = () => {
   // 총 금액 계산하기
   useEffect(() => {
     // 리덕스에서 가져온 물건들의 총 금액을 계산
-    const totalAmount = cartItems.reduce(
-      (acc, cartItem) => acc + cartItem.totalAmount * cartItem.numOfOrderItems,
+    const totalPrice = cartItems.reduce(
+      (acc, cartItem) => acc + cartItem.price * cartItem.quantity,
       0
     );
-    setTotalOrderAmount(totalAmount);
+    setTotalOrderPrice(totalPrice);
   }, [cartItems]);
 
   // 주문 수량 변경
-  const handleQuantityChange = async (item, newNumOfOrderItems) => {
+  const handleQuantityChange = async (item, newQuantity) => {
     // 장바구니 내에 수량 최소 1개
-    newNumOfOrderItems = Math.max(1, newNumOfOrderItems); 
+    newQuantity = Math.max(1, newQuantity); 
     
     const updatedItem = {
       // 새로 업데이트 할 아이템 ( 수량 변경된 거 )
       ...item,
-      numOfOrderItems: newNumOfOrderItems,
+      quantity: newQuantity,
     };
 
     dispatch(updateItemNum(updatedItem)); // 디스패치
@@ -68,13 +68,13 @@ const Cart = () => {
     );
 
     // 변경된 수량 맞게 해당 상품 주문 금액 변경
-    const updatedTotalAmount = updatedCartItems.reduce(
-      (acc, cartItem) => acc + cartItem.totalAmount,
+    const updatedPrice = updatedCartItems.reduce(
+      (acc, cartItem) => acc + cartItem.price,
       0
     );
 
     // 전체 주문 금액 변경
-    setTotalOrderAmount(updatedTotalAmount);
+    setTotalOrderPrice(updatedPrice);
 
     try {
       const userCartRef = doc(firestore, `${user.email}Cart`, item.name); // 경로
@@ -86,7 +86,7 @@ const Cart = () => {
         if (cartData) { // 새로 업데이트 하기
           const updatedItemInCart = {
             ...cartData,
-            numOfOrderItems: updatedItem.numOfOrderItems
+            quantity: updatedItem.quantity
           };
     
           await updateDoc(userCartRef, updatedItemInCart);
@@ -99,7 +99,7 @@ const Cart = () => {
   };
 
   const handleOrderBtn = ()=>{
-    navigete(`/order/${user.email}`, { state: { selectedItems: cartItems, quantity: totalOrderAmount } });
+    navigete(`/order/${user.email}`, { state: { selectedItems: cartItems, price: totalOrderPrice } });
   }
 
   // #region 렌더링
@@ -122,15 +122,15 @@ const Cart = () => {
               <div>
                 <button
                   onClick={() =>
-                    handleQuantityChange(cartItem, cartItem.numOfOrderItems - 1)
+                    handleQuantityChange(cartItem, cartItem.quantity - 1)
                   }
                 >
                   <FontAwesomeIcon icon={faMinus} />
                 </button>
-                <span>{cartItem.numOfOrderItems}</span>
+                <span>{cartItem.quantity}</span>
                 <button
                   onClick={() =>
-                    handleQuantityChange(cartItem, cartItem.numOfOrderItems + 1)
+                    handleQuantityChange(cartItem, cartItem.quantity + 1)
                   }
                 >
                   <FontAwesomeIcon icon={faPlus} />
@@ -138,7 +138,7 @@ const Cart = () => {
               </div>
               <span>
                 {(
-                  cartItem.numOfOrderItems * cartItem.totalAmount
+                  cartItem.quantity * cartItem.price
                 ).toLocaleString()}
                 원
               </span>
@@ -149,7 +149,7 @@ const Cart = () => {
       <section className="order-container">
         <div className="order-amount-container">
           <span id="order-title">총 결제금액</span>
-          <span>{totalOrderAmount.toLocaleString()}원</span>
+          <span>{totalOrderPrice.toLocaleString()}원</span>
         </div>
         <div className="order-type-container">
           <button id="keepShopping-btn" onClick={()=>navigete('/')}>계속 둘러보기</button>

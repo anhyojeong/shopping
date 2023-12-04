@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
-import useAddFirestore from "../hooks/useAddFirestore";
+import useAddCart from "../hooks/useAddCart";
 
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,8 +20,8 @@ const ItemInfo = () => {
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
   const [searchTerm, setSearchTerm] = useState(itemName); // 초기값을 useParams에서 가져온 itemName으로 설정
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
-  const [numOfOrderItems, setNumOfOrderItems] = useState(0); // 주문할 아이템 수
-  const [totalAmount, setAmount] = useState(0);
+  const [quantity, setQuantity] = useState(0); // 주문할 아이템 수
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,33 +55,32 @@ const ItemInfo = () => {
 
   // 구매 수량 빼기
   const minusOrderItemNum = () => {
-    if (numOfOrderItems > 0) {
+    if (quantity > 0) {
       // 0개 이상
-      setNumOfOrderItems(numOfOrderItems - 1);
-      setAmount((numOfOrderItems - 1) * searchResults[0]?.price);
+      setQuantity(quantity - 1);
+      setTotalPrice((quantity - 1) * searchResults[0]?.price);
     }
   };
 
   // 구매 수량 더하기
   const plusOrderItemNum = () => {
-    setNumOfOrderItems(numOfOrderItems + 1);
-    setAmount((numOfOrderItems + 1) * searchResults[0]?.price);
+    setQuantity(quantity + 1);
+    setTotalPrice((quantity + 1) * searchResults[0]?.price);
   };
 
   // 장바구니 버튼
-  const { addCart } = useAddFirestore(
+  const { addCart } = useAddCart(
     user,
     "Cart",
     searchResults,
-    numOfOrderItems,
-    searchResults[0]?.price
+    quantity
   );
 
   // 바로구매 버튼
   const handleBuyNowClick = () => {
-    console.log(numOfOrderItems);
+    console.log(quantity);
     navigate(`/order/${user.email}`, {
-      state: { selectedItems: searchResults, quantity: numOfOrderItems },
+      state: { selectedItems: searchResults, quantity: quantity },
     });
   };
 
@@ -124,13 +123,13 @@ const ItemInfo = () => {
                 <button onClick={minusOrderItemNum}>
                   <FontAwesomeIcon icon={faMinus} />
                 </button>
-                <span className="orderSheet-label">{numOfOrderItems}</span>
+                <span className="orderSheet-label">{quantity}</span>
                 <button onClick={plusOrderItemNum}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               </div>
               <span className="orderSheet-label">
-                총 금액 : {totalAmount.toLocaleString()}원
+                총 금액 : {totalPrice.toLocaleString()}원
               </span>
             </div>
             <div className="item-btn-container">
