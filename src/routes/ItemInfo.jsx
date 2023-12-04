@@ -79,6 +79,7 @@ const ItemInfo = () => {
 
   // 바로구매 버튼
   const handleBuyNowClick = () => {
+    console.log(numOfOrderItems);
     navigate(`/order/${user.email}`, {
       state: { selectedItems: searchResults, quantity: numOfOrderItems },
     });
