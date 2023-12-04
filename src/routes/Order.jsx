@@ -28,7 +28,7 @@ const Order = () => {
     willBuyItems.map((item) => ({
       name: item.name,
       price: item.price,
-      quantity: quantity,
+      quantity: quantity===undefined? item.quantity : quantity,
     }))
   );
 

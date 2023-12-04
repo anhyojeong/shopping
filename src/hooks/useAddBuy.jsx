@@ -3,6 +3,7 @@ import { firestore } from "../firebase";
 
 const useAddBuy = (user, items) => {
     const addBuy= async()=>{
+      console.log(items);
         if (!user) {
             alert("로그인 이후 이용 가능합니다.");
             return;
@@ -10,8 +11,9 @@ const useAddBuy = (user, items) => {
         
           try {
             for (const item of items) {
+              const timestamp = Date.now(); // 현재 시간을 밀리초로 가져옴 (주문 번호로 사용)
               // 유저의 문서 참조
-              const docRef = doc(firestore, `${user.email}Buy`, item.name);
+              const docRef = doc(firestore, `${user.email}Buy`, `${timestamp}`);
         
               const inputData = {
                 name: item.name,
@@ -19,7 +21,7 @@ const useAddBuy = (user, items) => {
                 price: item.price,
               };
               await setDoc(docRef, inputData);
-              alert("구매 내역에 추가되었습니다.");
+              console.log("구매 내역이 추가되었습니다.");
             }
           } catch (error) {
             console.error("에러 : ", error);
