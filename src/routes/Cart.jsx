@@ -146,12 +146,12 @@ const Cart = () => {
           ))}
         </>
       </section>
-      <section className="order-container">
-        <div className="order-amount-container">
-          <span id="order-title">총 결제금액</span>
+      <section className="cart-summary">
+        <div className="cart-price-container">
+          <span id="cart-title">총 결제금액</span>
           <span>{totalOrderPrice.toLocaleString()}원</span>
         </div>
-        <div className="order-type-container">
+        <div className="cart-type-container">
           <button id="keepShopping-btn" onClick={()=>navigete('/')}>계속 둘러보기</button>
           <button id="goOrder-btn" onClick={handleOrderBtn}>구매하기</button>
         </div>
