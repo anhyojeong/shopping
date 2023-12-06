@@ -19,6 +19,7 @@ const useAddBuy = (user, items) => {
                 name: item.name,
                 quantity: item.quantity,
                 price: item.price,
+                orderNum: timestamp.toString(),
               };
               await setDoc(docRef, inputData);
               console.log("구매 내역이 추가되었습니다.");

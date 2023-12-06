@@ -19,7 +19,7 @@ const UserInfo = () => {
         )}
       </div>
       <RecentItems />
-      <OrderList />
+      <OrderList user={user}/>
     </div>
   );
 };

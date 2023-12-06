@@ -37,6 +37,8 @@ const Order = () => {
     }))
   );
 
+  window.scrollTo(0, 0); // 스크롤 상단으로 이동
+
   return (
     <div className="cart-order-container">
       <h1 id="order-title">주문 / 결제하기</h1>
