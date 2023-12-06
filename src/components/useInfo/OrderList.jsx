@@ -3,7 +3,7 @@ import { firestore } from "../../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 const OrderList = ({ user }) => {
-  const [searchResults, setSearchResults] = useState([]);
+  const [groupedResults, setGroupedResults] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,10 +26,33 @@ const OrderList = ({ user }) => {
             ...doc.data(),
           }));
 
-          setSearchResults((arr) => [...arr, ...dataArr]); // setState 비동기 때문에 함수로 state 갱신
+          // 일별 구매내역으로 모으기
+          const groupedData = dataArr.reduce((groups, item) => {
+            // 문자열로 저장된 타임스탬프 숫자형으로 바꾸고 date 객체로 바꾸기
+            const timestamp = new Date(Number(item.orderNum)); 
 
-          console.log(dataArr);
-          console.log(searchResults);
+            // 날짜 포맷
+            const formattedDate = timestamp.toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+
+            if (!groups[formattedDate]) {
+              groups[formattedDate] = [];
+              return(
+                <div>
+                    <h2>최근 구매 내역이 없습니다.</h2>
+                </div>
+              )
+            }
+
+            groups[formattedDate].push(item);
+            
+            return groups;
+          }, {});
+
+          setGroupedResults(groupedData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,9 +68,16 @@ const OrderList = ({ user }) => {
 
   return (
     <div>
-      주문 내역
-      {searchResults.map((searchResult) => (
-        <li>{searchResult.name}</li>
+        <h2>최근 주문 내역</h2>
+      {Object.entries(groupedResults).map(([date, orders]) => (
+        <div key={date}>
+          <h3>{date}</h3>
+          <ul>
+            {orders.map((order) => (
+              <li key={order.id}>{order.name}</li>
+            ))}
+          </ul>
+        </div>
       ))}
     </div>
   );
