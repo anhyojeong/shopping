@@ -1,19 +1,80 @@
-.user-info-container{
-    margin-top: 20vh;
-    padding: 0 5%;
+.user-info-container {
+  margin-top: 20vh;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: stretch;
 }
 
-.user-name{
-    font-size: 2em;
-    padding-bottom: 2%;
+.user-name {
+  display: flex;
+  justify-content: start;
+  font-size: 2em;
+  padding-bottom: 5%;
 }
-.viewed-items-container{
-    padding : 1%;
+
+.user-info-left {
+  position: sticky;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 }
-.viewed-items-title{
-    font-size : 1.5em;
-    border-bottom : 1px solid black;
+#userinfo-category-container {
+  grid-row: 1;
+  position: sticky;
+  top: 20px;
 }
-.viewed-items{
-    list-style: none;
+.userinfo-content-category {
+  margin-top: 5%;
+  margin-left: 50px;
+  /* 화면에 꽉 차게 */
+  flex-grow: 1;
+}
+.orderList-container {
+  grid-column: 2;
+  margin-bottom: 20px;
+}
+.order-items {
+  border-bottom: 1.8px solid black;
+}
+#order-date {
+  font-size: 1.2em;
+  border-bottom: 3px solid black;
+  padding: 20px 0;
+}
+.order-title-container {
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+  padding: 20px 20px;
+  border-bottom: 1.8px solid black;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.order-item-container {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-basis: 33.3%;
+  padding: 20px 20px;
+  border-bottom: 0.4px solid rgba(0, 0, 0, 0.446);
+
+}
+.order-item-container ul,
+.order-item-container li {
+  flex: 1;
+  text-align: center;
+}
+.order-item-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.order-content-title {
+  font-size: 1.5em;
+}
+.viewed-items {
+  list-style: none;
 }

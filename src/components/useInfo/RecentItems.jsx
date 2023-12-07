@@ -16,9 +16,11 @@ const RecentItems = () => {
 
   return (
     <div className="viewed-items-container">
-      <p className="viewed-items-title">최근 본 상품</p>
+      <h1 className="order-content-title">최근 본 상품</h1>
       {reversedViewedItems.map((viewedItem, index) => (
-        <li className="viewed-items" key={index}>{viewedItem}</li>
+        <ul key={index}>
+          <li className="viewed-items">{viewedItem}</li>
+        </ul>
       ))}
     </div>
   );

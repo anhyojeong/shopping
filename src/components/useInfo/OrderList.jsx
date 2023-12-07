@@ -15,12 +15,14 @@ const OrderList = ({ user }) => {
           const collectionName = user.email + "Buy";
 
           const q = query(
+            // 쿼리
             collection(firestore, collectionName),
             where("orderNum", ">=", oneWeekAgo.toString())
           );
 
-          const snapshot = await getDocs(q);
+          const snapshot = await getDocs(q); // 쿼리 결과
 
+          // 받아온 결과에서 아이템 분리
           const dataArr = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
@@ -28,8 +30,8 @@ const OrderList = ({ user }) => {
 
           // 일별 구매내역으로 모으기
           const groupedData = dataArr.reduce((groups, item) => {
-            // 문자열로 저장된 타임스탬프 숫자형으로 바꾸고 date 객체로 바꾸기
-            const timestamp = new Date(Number(item.orderNum)); 
+            // 문자열로 저장된 타임스탬프 숫자형으로 바꾸고(필수!) date 객체로 바꾸기
+            const timestamp = new Date(Number(item.orderNum));
 
             // 날짜 포맷
             const formattedDate = timestamp.toLocaleDateString("ko-KR", {
@@ -40,19 +42,15 @@ const OrderList = ({ user }) => {
 
             if (!groups[formattedDate]) {
               groups[formattedDate] = [];
-              return(
-                <div>
-                    <h2>최근 구매 내역이 없습니다.</h2>
-                </div>
-              )
             }
 
             groups[formattedDate].push(item);
-            
+
             return groups;
           }, {});
 
           setGroupedResults(groupedData);
+          console.log(groupedResults);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,16 +65,28 @@ const OrderList = ({ user }) => {
   }
 
   return (
-    <div>
-        <h2>최근 주문 내역</h2>
+    <div className="orderList-container">
+      <h1 className="order-content-title">주문 내역</h1>
       {Object.entries(groupedResults).map(([date, orders]) => (
-        <div key={date}>
-          <h3>{date}</h3>
-          <ul>
-            {orders.map((order) => (
-              <li key={order.id}>{order.name}</li>
-            ))}
-          </ul>
+        <div className="order-items" key={date}>
+          <h2 id="order-date">주문 일자 : {date}</h2>
+          <div className="order-title-container">
+            <span>주문 번호</span>
+            <span>상품 정보</span>
+            <span>배송 정보</span>
+          </div>
+          {orders.map((order) => (
+            <ul className="order-item-container" key={order.id}>
+              <li className="order-item-info">{order.id}</li>
+              <ul>
+                <li>{order.name}</li>
+                <li>
+                  {order.price.toLocaleString()}원 / 수량 {order.quantity}개
+                </li>
+              </ul>
+              <li className="order-item-info">배송 완료</li>
+            </ul>
+          ))}
         </div>
       ))}
     </div>
