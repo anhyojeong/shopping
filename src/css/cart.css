@@ -99,3 +99,21 @@
     background-color:#e0afa0 ;
 }
 /* #endregion */
+
+
+/* 장바구니에 아무 상품도 없을 때 */
+#empty-cart {
+  font-size: 2.5em;
+  font-weight: bold;
+  position: fixed;
+  top: 40%;
+}
+
+#empty-cart p {
+  padding: 30px 20px;
+}
+#goShopping-btn{
+  width: 40%;
+  font-size: 0.8em;
+  font-weight: normal;
+}

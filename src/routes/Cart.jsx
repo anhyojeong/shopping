@@ -115,7 +115,8 @@ const Cart = () => {
 
       const deletePromises = [];
 
-      snapshot.forEach((document) => { // 컬렉션의 문서마다 문서 경로 참조 생성
+      snapshot.forEach((document) => {
+        // 컬렉션의 문서마다 문서 경로 참조 생성
         const docRef = doc(collectionRef, document.id);
         deletePromises.push(deleteDoc(docRef)); // 넣어서
       });
@@ -141,60 +142,72 @@ const Cart = () => {
   // #region 렌더링
   // 유저 가져오기 전까지 아무것도 렌더링하지 않음
   if (!user) {
-    return null;
+    return <div>loaging...</div>;
   }
   return (
     <div className="cart-order-container">
-      <section className="cart-container">
-        <div className="cart-title-container">
-          <span>상품 정보</span>
-          <span>수량</span>
-          <span>주문금액</span>
-        </div>
-        <>
-          {cartItems.map((cartItem, index) => (
-            <div className="cart-item-container" key={index}>
-              <span>{cartItem.name}</span>
-              <div>
-                <button
-                  onClick={() =>
-                    handleQuantityChange(cartItem, cartItem.quantity - 1)
-                  }
-                >
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-                <span>{cartItem.quantity}</span>
-                <button
-                  onClick={() =>
-                    handleQuantityChange(cartItem, cartItem.quantity + 1)
-                  }
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </div>
-              <span>
-                {(cartItem.quantity * cartItem.price).toLocaleString()}원
-              </span>
+      {cartItems.length > 0 ? (
+        <div className="cart-order-container">
+          <section className="cart-container">
+            <div className="cart-title-container">
+              <span>상품 정보</span>
+              <span>수량</span>
+              <span>주문금액</span>
             </div>
-          ))}
-        </>
-      </section>
-      <section className="cart-summary">
-        <div className="cart-price-container">
-          <span id="cart-title">총 결제금액</span>
-          <span>{totalOrderPrice.toLocaleString()}원</span>
+            <>
+              {cartItems.map((cartItem, index) => (
+                <div className="cart-item-container" key={index}>
+                  <span>{cartItem.name}</span>
+                  <div>
+                    <button
+                      onClick={() =>
+                        handleQuantityChange(cartItem, cartItem.quantity - 1)
+                      }
+                    >
+                      <FontAwesomeIcon icon={faMinus} />
+                    </button>
+                    <span>{cartItem.quantity}</span>
+                    <button
+                      onClick={() =>
+                        handleQuantityChange(cartItem, cartItem.quantity + 1)
+                      }
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                  </div>
+                  <span>
+                    {(cartItem.quantity * cartItem.price).toLocaleString()}원
+                  </span>
+                </div>
+              ))}
+            </>
+          </section>
+          <section className="cart-summary">
+            <div className="cart-price-container">
+              <span id="cart-title">총 결제금액</span>
+              <span>{totalOrderPrice.toLocaleString()}원</span>
+            </div>
+            <div className="cart-type-container">
+              <button id="keepShopping-btn" onClick={() => navigate("/")}>
+                계속 둘러보기
+              </button>
+              <button id="goOrder-btn" onClick={handleOrderBtn}>
+                구매하기
+              </button>
+            </div>
+          </section>
         </div>
-        <div className="cart-type-container">
-          <button id="keepShopping-btn" onClick={() => navigate("/")}>
-            계속 둘러보기
-          </button>
-          <button id="goOrder-btn" onClick={handleOrderBtn}>
-            구매하기
+      ) : (
+        <div className="cart-container" id="empty-cart">
+          <p>장바구니에 담은 상품이 없습니다.</p>
+          <button id="goShopping-btn" onClick={() => navigate("/")}>
+            둘러보기
           </button>
         </div>
-      </section>
+      )}
     </div>
   );
+
   // #endregion
 };
 
