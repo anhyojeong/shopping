@@ -1,5 +1,5 @@
-.cart-order-container{
-    margin: 15vh 20px 20px;
+.cart-order-container {
+  margin: 15vh 20px 20px;
 }
 .cart-container {
   width: 100%;
@@ -34,11 +34,31 @@
 /* #region 장바구니 아이템 */
 .cart-item-container {
   font-size: 1em;
+  align-items: center;
+}
+.cart-item-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+#cart-image {
+  margin-left: 80px;
+  width: 100px; /* 원하는 고정된 너비 설정 */
+  height: auto; /* 높이를 자동으로 조절하여 가로세로 비율을 유지 */
+}
+.cart-item {
+  display: flex;
+  flex-direction: column;
 }
 .cart-item-container span {
   flex: 1;
+  margin-bottom: 2px;
   text-align: center;
-  padding: 10px 0;
+}
+.cart-item span{
+  text-align:left;
+  margin-left: 12px;
 }
 .cart-item-container div {
   flex: 1;
@@ -66,7 +86,7 @@
 }
 .cart-price-container {
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 3%;
 }
@@ -75,7 +95,7 @@
   font-size: 1.8em;
   font-weight: bold;
 }
-#cart-title{
+#cart-title {
   font-size: 1.5em;
   font-weight: normal;
 }
@@ -86,20 +106,19 @@
   align-items: start;
   gap: 3%;
 }
-.cart-type-container button{
-    flex: 1;
-    font-size: 1.2em;
-    background-color: #ccc;
-    border: 0;
+.cart-type-container button {
+  flex: 1;
+  font-size: 1.2em;
+  background-color: #ccc;
+  border: 0;
 }
-#keepShopping-btn{
-    background-color:#bcb8b1 ;
+#keepShopping-btn {
+  background-color: #bcb8b1;
 }
-#goOrder-btn{
-    background-color:#e0afa0 ;
+#goOrder-btn {
+  background-color: #e0afa0;
 }
 /* #endregion */
-
 
 /* 장바구니에 아무 상품도 없을 때 */
 #empty-cart {
@@ -112,7 +131,7 @@
 #empty-cart p {
   padding: 30px 20px;
 }
-#goShopping-btn{
+#goShopping-btn {
   width: 40%;
   font-size: 0.8em;
   font-weight: normal;

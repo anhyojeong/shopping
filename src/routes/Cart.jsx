@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 // hooks
 import LoadDB from "../hooks/LoadDB";
+import useItemsImage from "../hooks/useItemsImage";
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -139,6 +140,44 @@ const Cart = () => {
     navigate(`/order/${user.email}`, { state: { willBuyItems: cartItems } });
   };
 
+  // 장바구니 상품 하나씩 렌더링 (원래 Cart return에 있었는데 useItemsImage 사용할라고 따로 뺌)
+  const CartItem = ({ cartItem, handleQuantityChange }) => {
+    // 이미지 경로
+    const imageUrl = useItemsImage(cartItem.name);
+
+    return (
+      <div className="cart-item-container">
+        <div className="cart-item-info">
+          <img src={imageUrl} alt={cartItem.name} id="cart-image" />
+          <div className="cart-item">
+            <span>{cartItem.brand}</span>
+            <span>{cartItem.name}</span>
+            <span>{cartItem.price.toLocaleString()}원</span>
+          </div>
+        </div>
+
+        <div>
+          <button
+            onClick={() =>
+              handleQuantityChange(cartItem, cartItem.quantity - 1)
+            }
+          >
+            <FontAwesomeIcon icon={faMinus} />
+          </button>
+          <span>{cartItem.quantity}</span>
+          <button
+            onClick={() =>
+              handleQuantityChange(cartItem, cartItem.quantity + 1)
+            }
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+        <span>{(cartItem.quantity * cartItem.price).toLocaleString()}원</span>
+      </div>
+    );
+  };
+
   // #region 렌더링
   // 유저 가져오기 전까지 아무것도 렌더링하지 않음
   if (!user) {
@@ -156,29 +195,11 @@ const Cart = () => {
             </div>
             <>
               {cartItems.map((cartItem, index) => (
-                <div className="cart-item-container" key={index}>
-                  <span>{cartItem.name}</span>
-                  <div>
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(cartItem, cartItem.quantity - 1)
-                      }
-                    >
-                      <FontAwesomeIcon icon={faMinus} />
-                    </button>
-                    <span>{cartItem.quantity}</span>
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(cartItem, cartItem.quantity + 1)
-                      }
-                    >
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </div>
-                  <span>
-                    {(cartItem.quantity * cartItem.price).toLocaleString()}원
-                  </span>
-                </div>
+                <CartItem
+                  key={index}
+                  cartItem={cartItem}
+                  handleQuantityChange={handleQuantityChange}
+                />
               ))}
             </>
           </section>

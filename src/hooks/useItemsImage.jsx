@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 
-const useItemsImage = (selectedCategory, itemName) => {
-  const [imageUrl, setImageUrl] = useState(null);
+const PATH ='items';
+
+const useItemsImage = (itemName) => {
+  const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
     const getImageUrl = async () => {
       try {
-        const imagePath = `${selectedCategory}/${itemName}.jpg`;
+        const imagePath = `${PATH}/${itemName}.jpg`;
         const imageRef = ref(storage, imagePath);
         const url = await getDownloadURL(imageRef);
         setImageUrl(url);
@@ -18,7 +20,7 @@ const useItemsImage = (selectedCategory, itemName) => {
     };
 
     getImageUrl();
-  }, [selectedCategory, itemName]);
+  }, [itemName]);
 
   return imageUrl;
 };

@@ -35,6 +35,7 @@ const useAddCart = (
         } else {
           const inputData = {
             name: searchResults[0].name,
+            brand: searchResults[0].brand,
             quantity: quantity,
             price: searchResults[0].price,
           };

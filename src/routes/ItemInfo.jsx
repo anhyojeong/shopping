@@ -18,11 +18,13 @@ const ItemInfo = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user); // 리덕스에서 유저 정보 가져오기
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
-  const [searchTerm, setSearchTerm] = useState(itemName); // 초기값을 useParams에서 가져온 itemName으로 설정
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [quantity, setQuantity] = useState(0); // 주문할 아이템 수
   const [totalPrice, setTotalPrice] = useState(0);
 
+  let searchTerm = itemName; // 초기값을 useParams에서 가져온 itemName으로 설정
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,7 +53,7 @@ const ItemInfo = () => {
   }, [searchTerm]); //searchTerm변경될 때마다
 
   // 이미지 URL 가져오기
-  const imageUrl = useItemsImage(category, searchResults[0]?.name);
+  const imageUrl = useItemsImage(searchResults[0]?.name);
 
   // 구매 수량 빼기
   const minusOrderItemNum = () => {
