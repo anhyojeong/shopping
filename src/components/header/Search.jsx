@@ -18,7 +18,10 @@ const Search = () => {
       const itemsCollection = collection(firestore, "items");
 
       // 쿼리
-      const q = query(itemsCollection, where("keyword", "array-contains",`${searchWord}`));
+      const q = query(
+        itemsCollection,
+        where("keyword", "array-contains", `${searchWord}`)
+      );
       const snapshot = await getDocs(q);
 
       const results = [];
@@ -40,20 +43,32 @@ const Search = () => {
 
   return (
     <div className="search-container">
-      <input
-        id="search-input"
-        type="text"
-        placeholder="Search..."
-        onChange={handleSearchWordChange}
-      />
-      <button className="header-btn" id="header-search-btn">
-        <FontAwesomeIcon icon={faSearch} size="2x" />
-      </button>
-      {searchResults.map((result, index) => (
-        <div key={index}>
-          {result.name} - {result.brand}
-        </div>
-      ))}
+      <section id="search">
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchWordChange}
+        />
+        <button className="header-btn" id="header-search-btn">
+          <FontAwesomeIcon icon={faSearch} size="2x" />
+        </button>
+      </section>
+
+      {searchResults ? (
+        <section id="result">
+          {searchResults.map((result, index) => (
+            <div className="result-item" key={index}>
+              <ul>
+                <li className="result-item-brand">{result.brand}</li>
+                <li className="result-item-name">{result.name}</li>
+              </ul>
+            </div>
+          ))}
+        </section>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
