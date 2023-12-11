@@ -28,6 +28,7 @@ const Navigation = () => {
 
   const handleLogoutClick = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   // #endregion

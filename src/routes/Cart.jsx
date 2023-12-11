@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 // 리덕스
 import { useSelector, useDispatch } from "react-redux";
@@ -30,7 +30,7 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items); // Redux에서 물건들을 가져오기
   const [totalOrderPrice, setTotalOrderPrice] = useState(0); // 총 금액
 
-  // firestore에서 유저 장바구니에 있는 물건들 가져오기
+  // 첨에 firestore에서 유저 장바구니에 있는 물건들 가져오기
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,7 +59,7 @@ const Cart = () => {
   }, [cartItems]);
 
   // 주문 수량 변경
-  const handleQuantityChange = async (item, newQuantity) => {
+  const handleQuantityChange = useCallback(async (item, newQuantity) => {
     // 장바구니 내에 수량 최소 1개
     newQuantity = Math.max(1, newQuantity);
 
@@ -106,7 +106,7 @@ const Cart = () => {
     } catch (error) {
       console.error("db 오류 : ", error);
     }
-  };
+  }, [user, cartItems, dispatch]);
 
   // 파이어베이스 스토어에서 장바구니 비우기
   const deleteAllDocuments = async (collectionPath) => {
@@ -140,25 +140,27 @@ const Cart = () => {
     navigate(`/order/${user.email}`, { state: { willBuyItems: cartItems } });
   };
 
+
   // 장바구니 상품 하나씩 렌더링 (원래 Cart return에 있었는데 useItemsImage 사용할라고 따로 뺌)
-  const CartItem = ({ cartItem, handleQuantityChange }) => {
-    // 이미지 경로
+  const CartItem = React.memo(({ cartItem }) => {
+   // 이미지 경로
     const imageUrl = useItemsImage(cartItem.name);
+    const memoizedImageUrl = useMemo(() => imageUrl, [imageUrl]);
 
     return (
       <div className="cart-item-container">
         <div className="cart-item-info">
-          <img src={imageUrl} alt={cartItem.name} id="cart-image" />
+        <img src={memoizedImageUrl} alt={cartItem.name} id="cart-image" />
           <div className="cart-item">
             <span>{cartItem.brand}</span>
             <span>{cartItem.name}</span>
             <span>{cartItem.price.toLocaleString()}원</span>
           </div>
         </div>
-
+  
         <div>
           <button
-            onClick={() =>
+            onClick={() => 
               handleQuantityChange(cartItem, cartItem.quantity - 1)
             }
           >
@@ -176,7 +178,7 @@ const Cart = () => {
         <span>{(cartItem.quantity * cartItem.price).toLocaleString()}원</span>
       </div>
     );
-  };
+  });
 
   // #region 렌더링
   // 유저 가져오기 전까지 아무것도 렌더링하지 않음
@@ -194,12 +196,8 @@ const Cart = () => {
               <span>주문금액</span>
             </div>
             <>
-              {cartItems.map((cartItem, index) => (
-                <CartItem
-                  key={index}
-                  cartItem={cartItem}
-                  handleQuantityChange={handleQuantityChange}
-                />
+              {cartItems.map((cartItem) => (
+                <CartItem key={cartItem.name} cartItem={cartItem} />
               ))}
             </>
           </section>

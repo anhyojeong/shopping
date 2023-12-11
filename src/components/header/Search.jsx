@@ -26,7 +26,6 @@ const Search = () => {
     // 컴포넌트 언마운트될 때 없애기
     // 언마운트될 때, 이벤트 리스너 정리해놓으면 메모리 누수 방지 + 성능 최적화
     return () => {
-      console.log("사라짐");
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
@@ -71,8 +70,6 @@ const Search = () => {
 
   // 검색창 밖에 누를 때
   const handleClickOutside = (e) => {
-    console.log(e.target);
-    console.log("ref", searchContainerRef.current);
     if (
       // 검색 컨테이너 ref 있는지
       searchContainerRef.current &&

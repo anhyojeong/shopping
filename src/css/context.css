@@ -22,10 +22,10 @@ ul {
   font-size: larger;
   letter-spacing: 1px; /* 글자 간격 */
 }
-.category:hover  {
+.category:hover {
   background-color: #d8d4cd;
 }
-.category.selected{
+.category.selected {
   background-color: #bcb8b1;
 }
 
@@ -57,7 +57,7 @@ ul {
 .item-area li {
   font-family: "Noto Serif KR", serif;
 }
-.item{
+.item {
   display: block;
   width: 250px;
 }
@@ -70,7 +70,7 @@ ul {
   font-weight: bold;
   font-size: small;
 }
-.item-name{
+.item-name {
   padding-bottom: 4px;
 }
 .item-price {
@@ -78,7 +78,38 @@ ul {
 }
 /* 물건 이름 길면 안보이게*/
 .ellipsis {
-  overflow:hidden; 
-  text-overflow:ellipsis; 
-  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1000px) {
+  .context-container {
+    flex-direction: column;
+  }
+  .categories-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .categories-container ul {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .category{
+    width: 150px;
+    height: 50px;
+  }
+  .items-container{
+    padding: 0 0;
+  }
+  #category-name{
+    display: none;
+  }
+  .items{
+    grid-template-columns: repeat(2,1fr);
+  }
 }
