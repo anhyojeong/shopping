@@ -14,7 +14,7 @@ import "../css/itemInfo.css";
 
 const ItemInfo = () => {
   // URL 매개변수에서 선택한 카테고리랑 아이템 이름 가져오기
-  const { itemName, category } = useParams();
+  const { itemName } = useParams();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user); // 리덕스에서 유저 정보 가져오기
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
@@ -30,7 +30,7 @@ const ItemInfo = () => {
       try {
         // firebase에서 특정 필드 검색하는 쿼리
         const q = query(
-          collection(firestore, category),
+          collection(firestore, "items"),
           where("name", "==", searchTerm)
         );
         const snapshot = await getDocs(q);
@@ -97,7 +97,7 @@ const ItemInfo = () => {
               <img
                 id="item-image"
                 src={imageUrl}
-                alt={`${category} - ${searchResults[0]?.name}`}
+                alt={`${searchResults[0]?.name}`}
               />
             ) : (
               <p>Loading image...</p>

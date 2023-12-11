@@ -41,9 +41,11 @@
 /* search */
 .search-container {
   flex: 5;
+  height: 1000px;
   display: flex;
   flex-direction: column;
 }
+
 
 #search{
   position: fixed;
@@ -55,7 +57,20 @@
   max-width: 500px;
   border-bottom: 1px solid black;
 }
-#search-input {
+
+#search-focused{
+  position: fixed;
+  top : 20px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  width: 50%;
+  max-width: 500px;
+  border-bottom: 1px solid black;
+  box-shadow: 0px 0px 5px #aeaeae;
+}
+
+#search-keyword {
   display: block;
   width: 100%;
   padding: 0 8px;
@@ -72,10 +87,11 @@
   background-color: white;
   box-shadow: 0px 0px 5px #aeaeae;
 }
-.result-item {
-  padding: 4px 4px;
+.result-item{
+  padding: 6px 4px;
   border-bottom: 0.8px solid #d3d3d3;
 }
+
 .result-item-brand{
   font-size: smaller;
   color: #7e7d7d;

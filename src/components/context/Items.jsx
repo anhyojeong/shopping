@@ -33,7 +33,7 @@ const Items = ({ selectedCategory }) => {
   // 제품 상세 페이지
   const goToItemDetail = (item) => {
     dispatch(selectItem(item));
-    navigate(`/itemInfo/${selectedCategory}/${item.name}`);
+    navigate(`/itemInfo/${item.name}`);
   };
 
   return (
