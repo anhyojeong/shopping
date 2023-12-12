@@ -19,7 +19,7 @@
 </br>
 
 # 2. 배포주소
-https://anhyojeong.github.io/calendar/
+
 </br>
 
 # 3. 구현
