@@ -17,8 +17,10 @@
 ----
 
 # 1. 개요 
-### 프로젝트 이름 : Shopping
-### 개발 기간 : 2023년 11월 ~
+### 프로젝트 이름 
+- Shopping
+### 개발 기간 
+- 2023년 11월 ~
 ### 스택 
   - HTML, CSS, JavaScript, React
   - Redux , Props, State : 상태관리
@@ -54,6 +56,7 @@
 # 2. 배포주소
 https://shopping-40c59.web.app/
 </br>
+</br>
 
 
 # 3. 구현
@@ -69,10 +72,11 @@ https://shopping-40c59.web.app/
 
 ##  상품 상세 정보 및 장바구니 
 - Firestore Database에서 선택한 상품의 상세 정보가져옵니다. </br>
-- 장바구니 버튼을 누르면 Firestore Database를 통해 로그인 된 사용자의 장바구니에 저장됩니다. 
+- 장바구니 버튼을 누르면 Firestore Database를 통해 로그인 된 사용자의 장바구니에 저장됩니다. </br>
 ![장바구니](https://github.com/anhyojeong/shopping/assets/87750523/f154e4e5-aeb9-4f92-90a5-9c99f5f2034c)
 
 ##  결제내역
+- 로그인 한 유저의 정보를 redux를 통해 가져옵니다. </br>
 - Firestore Database에서 사용자의 최근 일주일 구매 내역 정보가져옵니다. </br>
 ![주문내역](https://github.com/anhyojeong/shopping/assets/87750523/2d10d9be-2774-4160-bcc6-2345e9ed306b)
 
@@ -81,7 +85,13 @@ https://shopping-40c59.web.app/
 # 5. 어려웠던 점
 ### setState 비동기
 - 문제점
+  
+   사용자의 최근 본 상품이나 주문 내역을 가져와 화면에 보여줄 때 setState에서 문제가 발생하였습니다. 상태 업데이트가 예상과 다르게 이루어져, 상태 값이 즉시 반영되지 않았습니다. 
 - 해결 방법
+
+  
+  이를 해결하기 위해 콘솔 창에 setState 이후의 상태 값을 출력해보았습니다. 이 과정에서 상태 값이 하나씩 밀려서 콘솔 창에 출력되는 현상을 발견했고, 해당 문제의 원인을 찾기 위해 검색과 공식 문서를 살펴보았습니다. </br>
+    검색과 공식문서를 통해 setState 호출이 비동기적으로 이루어진다는 것을 알게 되었고, 공식문서에서 제안한 setState의 인자로 함수를 전달하여 비동기적인 상태 업데이트 문제를 해결하였습니다. 
 </br>
 
 
