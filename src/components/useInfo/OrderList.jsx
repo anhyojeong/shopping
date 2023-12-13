@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { firestore } from "../../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
-const OrderList = ({ user }) => {
+const OrderList = () => {
+  // 리덕스에서 유저 정보 가져오기
+  const user = useSelector((state) => state.auth.user);
   const [groupedResults, setGroupedResults] = useState([]);
   useEffect(() => {
     const fetchData = async () => {

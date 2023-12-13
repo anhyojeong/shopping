@@ -43,7 +43,7 @@ const UserInfo = () => {
         {selectedCategory === categories[0] ? (
           <RecentItems />
         ) : (
-          <OrderList user={user} />
+          <OrderList/>
         )}
       </section>
     </div>
