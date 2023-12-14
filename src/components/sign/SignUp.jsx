@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase"; // Firebase 모듈에서 auth 가져오기
 
-const SignUp = () => {
+const SignUp = ({ onSignUpSuccess }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,9 +24,12 @@ const SignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
+
         if (!user) {
-          setMsg("정보를 다시 입력해주세요ㅜㅜ");
+          setMsg("😢정보를 다시 입력해주세요😢");
+        } else {
+          // 회원가입 성공 시 모달 나오고 부모한테 알림
+          onSignUpSuccess();
         }
         // 회원가입 성공하면 입력한 이름 저장
         updateProfile(auth.currentUser, {
@@ -38,7 +41,12 @@ const SignUp = () => {
           .catch((error) => {
             console.log(error);
           });
-        setMsg("회원가입 성공!");
+        onSignUpSuccess();
+        
+        // 입력한 정보 초기화
+        setName("");
+        setEmail("");
+        setPassword("");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -53,7 +61,7 @@ const SignUp = () => {
       <form className="signForm" action="#">
         <h1 className="sign-title">회원가입</h1>
         <p className="sign-subTitle">
-          이름, 이메일, 비밀번호를 모두 입력해주세요.
+          이름, 이메일, 비밀번호를 모두 입력해주세요 
         </p>
         <input
           type="text"
@@ -79,7 +87,6 @@ const SignUp = () => {
         {password.length > 0 && password.length < 6 && (
           <p className="signUp-msg">비밀번호는 6자리 이상이어야 합니다.</p>
         )}
-        {msg && <p>{msg}</p>}
         <button
           onClick={handleSignup}
           disabled={!name || !email || !password}

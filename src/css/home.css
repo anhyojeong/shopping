@@ -1,3 +1,9 @@
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 *{
   font-family: "Noto Serif KR", serif;
   margin: 0 0;

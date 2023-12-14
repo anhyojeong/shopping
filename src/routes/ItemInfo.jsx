@@ -80,7 +80,10 @@ const ItemInfo = () => {
 
   // 바로구매 버튼
   const handleBuyNowClick = () => {
-    console.log(searchResults);
+    if (!user) {
+      alert("로그인 이후 이용 가능합니다.");
+      return;
+    }
     navigate(`/order/${user.email}`, {
       state: { willBuyItems: searchResults, quantity:quantity },
     });
