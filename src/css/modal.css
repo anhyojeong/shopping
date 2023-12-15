@@ -3,8 +3,9 @@
     height: 100%;
     position: absolute;
     z-index: 101;
-    background-color: white;
+    background-color: rgb(245, 243, 243);
     display: flex;
     justify-content: center;
     align-items: center;
+    white-space: pre-line; /*줄바꿈*/
 }

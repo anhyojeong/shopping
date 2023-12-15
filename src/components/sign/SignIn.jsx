@@ -48,12 +48,14 @@ const SignIn = () => {
         <input
           type="email"
           placeholder="Email"
+          autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

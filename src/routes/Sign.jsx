@@ -23,12 +23,12 @@ const Sign = () => {
     <div className={`sign ${isSignUp ? "right-panel-active" : ""}`}>
       <SignIn />
       <SignUp onSignUpSuccess={() => {
-        setModalMsg('🎉회원가입 성공🎉\n 로그인 화면으로 이동합니다.');
+        setModalMsg("🎉회원가입 성공🎉\n 자동 로그인 된 후, 홈페이지로 이동합니다.");
         setIsModalVisible(true);
         togglePanel(); // 모달이 나타나면서 화면 전환
       }} />
       {isModalVisible && (
-        <Modal message={modalMsg} onClose={handleModalClose} />
+        <Modal message={modalMsg} onClose={handleModalClose} linkType="/"/>
       )}
       <div className="overlay-container">
         <div className="overlay">
