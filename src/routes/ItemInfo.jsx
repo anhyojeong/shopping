@@ -70,7 +70,7 @@ const ItemInfo = () => {
   };
 
   // hooks로 장바구니에 아이템 넣기
-  const { addCart, isModalOpen, modalMsg, link } = useAddCart(
+  const { addCart, isModalOpen, modalMsg, link, setIsModalOpen } = useAddCart(
     user,
     "Cart",
     searchResults,
@@ -89,74 +89,75 @@ const ItemInfo = () => {
   };
 
   return (
-    <div className="container">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <div className="item-img-container">
-            {imageUrl ? (
-              <img
-                id="item-image"
-                src={imageUrl}
-                alt={`${searchResults[0]?.name}`}
-              />
-            ) : (
-              <p>Loading image...</p>
-            )}
-          </div>
-          <div className="item-container">
-            <div className="item-info-container">
-              {searchResults.map((result) => (
-                <ul key={result.id}>
-                  <li className="item-brand" id="brand">
-                    {result.brand}
-                  </li>
-                  <li className="item-name" id="name">
-                    {result.name}
-                  </li>
-                  <li className="item-price" id="price">
-                    {" "}
-                    {result.price.toLocaleString()}원
-                  </li>
-                </ul>
-              ))}
+    <>
+      <div className="container">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <div className="item-img-container">
+              {imageUrl ? (
+                <img
+                  id="item-image"
+                  src={imageUrl}
+                  alt={`${searchResults[0]?.name}`}
+                />
+              ) : (
+                <p>Loading image...</p>
+              )}
             </div>
-            <div className="item-orderSheet-container">
-              <div className="orderSheet-item-count-area">
-                <button onClick={minusOrderItemNum}>
-                  <FontAwesomeIcon icon={faMinus} />
+            <div className="item-container">
+              <div className="item-info-container">
+                {searchResults.map((result) => (
+                  <ul key={result.id}>
+                    <li className="item-brand" id="brand">
+                      {result.brand}
+                    </li>
+                    <li className="item-name" id="name">
+                      {result.name}
+                    </li>
+                    <li className="item-price" id="price">
+                      {" "}
+                      {result.price.toLocaleString()}원
+                    </li>
+                  </ul>
+                ))}
+              </div>
+              <div className="item-orderSheet-container">
+                <div className="orderSheet-item-count-area">
+                  <button onClick={minusOrderItemNum}>
+                    <FontAwesomeIcon icon={faMinus} />
+                  </button>
+                  <span className="orderSheet-label">{quantity}</span>
+                  <button onClick={plusOrderItemNum}>
+                    <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                </div>
+                <span className="orderSheet-label">
+                  총 금액 : {totalPrice.toLocaleString()}원
+                </span>
+              </div>
+              <div className="item-btn-container">
+                <button id="item-cart" onClick={addCart}>
+                  장바구니
                 </button>
-                <span className="orderSheet-label">{quantity}</span>
-                <button onClick={plusOrderItemNum}>
-                  <FontAwesomeIcon icon={faPlus} />
+                <button id="item-buy" onClick={handleBuyNowClick}>
+                  바로구매
                 </button>
               </div>
-              <span className="orderSheet-label">
-                총 금액 : {totalPrice.toLocaleString()}원
-              </span>
             </div>
-            <div className="item-btn-container">
-              <button id="item-cart" onClick={addCart}>
-                장바구니
-              </button>
-              <button id="item-buy" onClick={handleBuyNowClick}>
-                바로구매
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
+
       {isModalOpen && (
         <Modal
           message={modalMsg}
-          onClose={() => {
-            // Handle modal close if needed
-          }}
+          onClose={() => setIsModalOpen(false)}
           linkType={link}
         />
       )}
-    </div>
+    </>
   );
 };
 

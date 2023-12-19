@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase";
 
@@ -7,10 +6,6 @@ const useAddCart = (user, type, searchResults, quantity) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMsg, setModalMessage] = useState("");
   const [link, setLink] = useState("");
-
-  console.log(modalMsg);
-  console.log(link);
-
 
   const addCart = async () => {
     if (!user) {
@@ -21,7 +16,7 @@ const useAddCart = (user, type, searchResults, quantity) => {
     }
     if (quantity < 1) {
       setModalMessage("주문 수량은 최소 1개 이상이어야 합니다.");
-      setLink(`/itemInfo/${user.email}`);
+      setLink(`/itemInfo/${searchResults[0].name}`);
       setIsModalOpen(true);
       return;
     }
@@ -67,7 +62,7 @@ const useAddCart = (user, type, searchResults, quantity) => {
     }
   };
 
-  return { addCart, isModalOpen, modalMsg, link };
+  return { addCart, isModalOpen, modalMsg, link, setIsModalOpen  };
 };
 
 export default useAddCart;
