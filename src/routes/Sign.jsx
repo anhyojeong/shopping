@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import SignUp from "../components/sign/SignUp";
 import SignIn from "../components/sign/SignIn";
-import Modal from "../Modal";
+import Modal from "../components/Modal";
 import "../css/sign.css";
 
 const Sign = () => {

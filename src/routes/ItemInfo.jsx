@@ -5,6 +5,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from "../firebase";
 import useItemsImage from "../hooks/useItemsImage";
 import useAddCart from "../hooks/useAddCart";
+import Modal from "../components/Modal";
 
 // 아이콘
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,11 +21,9 @@ const ItemInfo = () => {
   const [searchResults, setSearchResults] = useState([]); // 파이어스토어 쿼리 검색 결과 저장
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [quantity, setQuantity] = useState(0); // 주문할 아이템 수
-  const [totalPrice, setTotalPrice] = useState(0);
-
+  const [totalPrice, setTotalPrice] = useState(0); // 총 금액
   let searchTerm = itemName; // 초기값을 useParams에서 가져온 itemName으로 설정
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,8 +69,8 @@ const ItemInfo = () => {
     setTotalPrice((quantity + 1) * searchResults[0]?.price);
   };
 
-  // 장바구니 버튼
-  const { addCart } = useAddCart(
+  // hooks로 장바구니에 아이템 넣기
+  const { addCart, isModalOpen, modalMsg, link } = useAddCart(
     user,
     "Cart",
     searchResults,
@@ -85,7 +84,7 @@ const ItemInfo = () => {
       return;
     }
     navigate(`/order/${user.email}`, {
-      state: { willBuyItems: searchResults, quantity:quantity },
+      state: { willBuyItems: searchResults, quantity: quantity },
     });
   };
 
@@ -147,6 +146,15 @@ const ItemInfo = () => {
             </div>
           </div>
         </>
+      )}
+      {isModalOpen && (
+        <Modal
+          message={modalMsg}
+          onClose={() => {
+            // Handle modal close if needed
+          }}
+          linkType={link}
+        />
       )}
     </div>
   );

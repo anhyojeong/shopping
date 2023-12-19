@@ -1,19 +1,28 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "../firebase";
 
-const useAddCart = (
-  user,
-  type,
-  searchResults,
-  quantity,
-) => {
+const useAddCart = (user, type, searchResults, quantity) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMsg, setModalMessage] = useState("");
+  const [link, setLink] = useState("");
+
+  console.log(modalMsg);
+  console.log(link);
+
+
   const addCart = async () => {
     if (!user) {
-      alert("로그인 이후 이용 가능합니다.");
+      setModalMessage("로그인 이후 이용 가능합니다.");
+      setLink("/sign");
+      setIsModalOpen(true);
       return;
     }
     if (quantity < 1) {
-      alert("주문 수량은 최소 1개 이상이어야 합니다.");
+      setModalMessage("주문 수량은 최소 1개 이상이어야 합니다.");
+      setLink(`/itemInfo/${user.email}`);
+      setIsModalOpen(true);
       return;
     }
     try {
@@ -31,7 +40,11 @@ const useAddCart = (
       if (type === "Cart") {
         // 이미 장바구니에 해당 아이템이 존재하는 경우
         if (cartDocSnapshot.exists()) {
-          alert("장바구니에 같은 상품이 이미 존재합니다.");
+          setModalMessage(
+            "장바구니에 같은 상품이 이미 존재합니다.\n 장바구니로 이동하시겠습니까?"
+          );
+          setLink(`/cart/${user.email}`);
+          setIsModalOpen(true);
         } else {
           const inputData = {
             name: searchResults[0].name,
@@ -41,14 +54,20 @@ const useAddCart = (
           };
           await setDoc(docRef, inputData);
 
-          alert("장바구니에 추가되었습니다.");
+          setModalMessage(
+            "장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?"
+          );
+          setLink(`/cart/${user.email}`);
+
+          setIsModalOpen(true);
         }
       }
     } catch (error) {
       console.error("에러 : ", error);
     }
   };
-  return { addCart };
+
+  return { addCart, isModalOpen, modalMsg, link };
 };
 
 export default useAddCart;

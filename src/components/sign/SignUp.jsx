@@ -51,9 +51,9 @@ const SignUp = ({ onSignUpSuccess }) => {
     }
   };
 
-   // 회원가입 되면 자동으로 로그인
-   const autoLogin = async (auth, email, password) => {
-    console.log('자동로그인');
+  // 회원가입 되면 자동으로 로그인
+  const autoLogin = async (auth, email, password) => {
+    console.log("자동로그인");
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
@@ -82,27 +82,47 @@ const SignUp = ({ onSignUpSuccess }) => {
 
     // 회원가입 진행
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
+
+      // if (!user) {
+      //   setMsg("😢정보를 다시 입력해주세요😢");
+      // } else {
+      //   // 회원가입 성공하면 입력한 이름 저장
+      //   console.log("회원가입 성공");
+      //   await updateProfile(auth.currentUser, {
+      //     displayName: name,
+      //   });
+
+      //   console.log("환영합니다!");
+      //   onSignUpSuccess();
+      //   await autoLogin(auth, email, password);
+      // }
 
       if (!user) {
         setMsg("😢정보를 다시 입력해주세요😢");
+        return;
       } else {
         // 회원가입 성공하면 입력한 이름 저장
+        console.log("회원가입 성공");
+        await autoLogin(auth, email, password);
         await updateProfile(auth.currentUser, {
           displayName: name,
         });
-
+  
         console.log("환영합니다!");
         onSignUpSuccess();
-        await autoLogin(auth, email, password);
       }
 
+     
       // 입력한 정보 초기화
       setName("");
       setEmail("");
       setPassword("");
-
     } catch (error) {
       const errorCode = error.code;
       console.error(errorCode);
