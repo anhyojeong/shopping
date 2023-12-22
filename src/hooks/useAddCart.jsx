@@ -58,7 +58,7 @@ const useAddCart = (user, type, searchResults, quantity) => {
         }
       }
     } catch (error) {
-      console.error("에러 : ", error);
+     // console.error("에러 : ", error);
     }
   };
 

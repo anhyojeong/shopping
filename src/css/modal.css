@@ -24,8 +24,22 @@
 }
 
 .modal-content p{
-    margin-top: 5%;
     font-size: large;
     text-align: center;
 }
 
+.modal-header{
+    display: flex;
+    flex-direction: row;
+}
+.modal-close{
+    height: 20px;
+    width: 100%;
+    text-align: right;
+}
+#modal-close-btn{
+    padding: 0px 20px;
+    display: inline-block;
+    background-color: rgb(245, 245, 245);
+    border: 0;
+}
