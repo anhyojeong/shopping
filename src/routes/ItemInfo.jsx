@@ -22,6 +22,7 @@ const ItemInfo = () => {
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [quantity, setQuantity] = useState(0); // 주문할 아이템 수
   const [totalPrice, setTotalPrice] = useState(0); // 총 금액
+
   let searchTerm = itemName; // 초기값을 useParams에서 가져온 itemName으로 설정
 
   useEffect(() => {
@@ -79,10 +80,15 @@ const ItemInfo = () => {
 
   // 바로구매 버튼
   const handleBuyNowClick = () => {
+    const msg = "로그인 후 이용 가능합니다.";
+    const link = "/sign";
+
+    // 로그인 안 했을 때
     if (!user) {
-      alert("로그인 이후 이용 가능합니다.");
+      setIsModalOpen(true);
       return;
     }
+    // 로그인 했을 때
     navigate(`/order/${user.email}`, {
       state: { willBuyItems: searchResults, quantity: quantity },
     });
@@ -149,7 +155,7 @@ const ItemInfo = () => {
           </>
         )}
       </div>
-
+      {/* 모달창 */}
       {isModalOpen && (
         <Modal
           message={modalMsg}

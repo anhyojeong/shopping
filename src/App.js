@@ -9,6 +9,13 @@ import Cart from "./routes/Cart";
 import Order from "./routes/Order";
 
 const App = () => {
+  if (process.env.NODE_ENV === "production") {
+    console = window.console || {};
+    console.log = function no_console() {};
+    console.warn = function no_console() {};
+    console.error = function () {};
+  }
+
   return (
     <Router>
       <Header />
