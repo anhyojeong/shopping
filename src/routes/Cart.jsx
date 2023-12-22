@@ -6,14 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCart, updateItemNum } from "../redux/cartActions";
 // 파이어베이스
 import { firestore } from "../firebase";
-import {
-  doc,
-  getDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  collection,
-} from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 // hooks
 import LoadDB from "../hooks/LoadDB";
 import useItemsImage from "../hooks/useItemsImage";
@@ -59,108 +52,83 @@ const Cart = () => {
   }, [cartItems]);
 
   // 주문 수량 변경
-  const handleQuantityChange = useCallback(async (item, newQuantity) => {
-    // 장바구니 내에 수량 최소 1개
-    newQuantity = Math.max(1, newQuantity);
+  const handleQuantityChange = useCallback(
+    async (item, newQuantity) => {
+      // 장바구니 내에 수량 최소 1개
+      newQuantity = Math.max(1, newQuantity);
 
-    const updatedItem = {
-      // 새로 업데이트 할 아이템 ( 수량 변경된 거 )
-      ...item,
-      quantity: newQuantity,
-    };
+      const updatedItem = {
+        // 새로 업데이트 할 아이템 ( 수량 변경된 거 )
+        ...item,
+        quantity: newQuantity,
+      };
 
-    dispatch(updateItemNum(updatedItem)); // 디스패치
+      dispatch(updateItemNum(updatedItem)); // 디스패치
 
-    const updatedCartItems = cartItems.map((cartItem) =>
-      cartItem.name === updatedItem.name ? updatedItem : cartItem
-    );
+      const updatedCartItems = cartItems.map((cartItem) =>
+        cartItem.name === updatedItem.name ? updatedItem : cartItem
+      );
 
-    // 변경된 수량 맞게 해당 상품 주문 금액 변경
-    const updatedPrice = updatedCartItems.reduce(
-      (acc, cartItem) => acc + cartItem.price,
-      0
-    );
+      // 변경된 수량 맞게 해당 상품 주문 금액 변경
+      const updatedPrice = updatedCartItems.reduce(
+        (acc, cartItem) => acc + cartItem.price,
+        0
+      );
 
-    // 전체 주문 금액 변경
-    setTotalOrderPrice(updatedPrice);
+      // 전체 주문 금액 변경
+      setTotalOrderPrice(updatedPrice);
 
-    try {
-      const userCartRef = doc(firestore, `${user.email}Cart`, item.name); // 경로
-      const cartSnapshot = await getDoc(userCartRef); // 가져오기
+      try {
+        const userCartRef = doc(firestore, `${user.email}Cart`, item.name); // 경로
+        const cartSnapshot = await getDoc(userCartRef); // 가져오기
 
-      if (cartSnapshot.exists()) {
-        // 있으면
-        const cartData = cartSnapshot.data();
+        if (cartSnapshot.exists()) {
+          // 있으면
+          const cartData = cartSnapshot.data();
 
-        if (cartData) {
-          // 새로 업데이트 하기
-          const updatedItemInCart = {
-            ...cartData,
-            quantity: updatedItem.quantity,
-          };
+          if (cartData) {
+            // 새로 업데이트 하기
+            const updatedItemInCart = {
+              ...cartData,
+              quantity: updatedItem.quantity,
+            };
 
-          await updateDoc(userCartRef, updatedItemInCart);
-          console.log("db 수정");
+            await updateDoc(userCartRef, updatedItemInCart);
+          }
         }
+      } catch (error) {
+        console.error("db 오류 : ", error);
       }
-    } catch (error) {
-      console.error("db 오류 : ", error);
-    }
-  }, [user, cartItems, dispatch]);
-
-  // 파이어베이스 스토어에서 장바구니 비우기
-  const deleteAllDocuments = async (collectionPath) => {
-    try {
-      const collectionRef = collection(firestore, collectionPath); // 파이어스토어에서 참조할 컬렉션 경로
-      const snapshot = await getDocs(collectionRef); // 컬렉션 안에 문서들 가져오기
-
-      const deletePromises = [];
-
-      snapshot.forEach((document) => {
-        // 컬렉션의 문서마다 문서 경로 참조 생성
-        const docRef = doc(collectionRef, document.id);
-        deletePromises.push(deleteDoc(docRef)); // 넣어서
-      });
-
-      await Promise.all(deletePromises); // 삭제 실행 다 될 때까지 기다리기~
-
-      console.log("장바구니 비우기 성공");
-    } catch (error) {
-      console.error("장바구니 비우기 실패 : ", error);
-    }
-  };
+    },
+    [user, cartItems, dispatch]
+  );
 
   // 주문하기 버튼 클릭
   const handleOrderBtn = () => {
-    // 파이어베이스 스토어에서 장바구니 비우기
-    const collectionPath = `${user.email}Cart`;
-    deleteAllDocuments(collectionPath);
-
     // 구매 페이지로 이동
     navigate(`/order/${user.email}`, { state: { willBuyItems: cartItems } });
   };
 
-
   // 장바구니 상품 하나씩 렌더링 (원래 Cart return에 있었는데 useItemsImage 사용할라고 따로 뺌)
   const CartItem = React.memo(({ cartItem }) => {
-   // 이미지 경로
+    // 이미지 경로
     const imageUrl = useItemsImage(cartItem.name);
     const memoizedImageUrl = useMemo(() => imageUrl, [imageUrl]);
 
     return (
       <div className="cart-item-container">
         <div className="cart-item-info">
-        <img src={memoizedImageUrl} alt={cartItem.name} id="cart-image" />
+          <img src={memoizedImageUrl} alt={cartItem.name} id="cart-image" />
           <div className="cart-item">
             <span>{cartItem.brand}</span>
             <span>{cartItem.name}</span>
             <span>{cartItem.price.toLocaleString()}원</span>
           </div>
         </div>
-  
+
         <div>
           <button
-            onClick={() => 
+            onClick={() =>
               handleQuantityChange(cartItem, cartItem.quantity - 1)
             }
           >
